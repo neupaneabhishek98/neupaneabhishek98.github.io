@@ -11,9 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Theme Toggle (persisted) ---------- */
   const themeToggle = document.getElementById('themeToggle');
   const savedTheme = localStorage.getItem('theme');
-  const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-  const initialTheme = savedTheme || (prefersLight ? 'light' : 'dark');
+  const initialTheme = savedTheme || 'light';
   if (initialTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
+  else document.documentElement.removeAttribute('data-theme');
 
   themeToggle?.addEventListener('click', () => {
     const isLight = document.documentElement.getAttribute('data-theme') === 'light';
@@ -39,6 +39,25 @@ document.addEventListener('DOMContentLoaded', () => {
     link.addEventListener('click', () => {
       menuToggle.classList.remove('open');
       navLinks.classList.remove('open');
+    });
+  });
+
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    link.addEventListener('click', (e) => {
+      const hash = link.getAttribute('href');
+      if (!hash || hash === '#') return;
+
+      const target = document.querySelector(hash);
+      if (!target) return;
+
+      e.preventDefault();
+      const navOffset = navbar?.offsetHeight || 0;
+      const targetTop = hash === '#home'
+        ? 0
+        : target.getBoundingClientRect().top + window.scrollY - navOffset + 1;
+
+      window.scrollTo({ top: Math.max(targetTop, 0), behavior: 'smooth' });
+      history.pushState(null, '', hash);
     });
   });
 
