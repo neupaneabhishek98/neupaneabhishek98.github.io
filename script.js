@@ -194,37 +194,47 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
 
-  const isValidEmail = (e) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(e);
-
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
     status.textContent = '';
     status.className = 'form-status';
 
     const name = form.name.value.trim();
-    const email = form.email.value.trim();
+    const phone = form.phone.value.trim();
+    const projectType = form.projectType.value.trim();
+    const budget = form.budget.value.trim();
     const message = form.message.value.trim();
 
-    [form.name, form.email, form.message].forEach(f => f.classList.remove('invalid'));
+    [form.name, form.phone, form.projectType, form.message].forEach(f => f.classList.remove('invalid'));
 
     let hasError = false;
     if (!name) { form.name.classList.add('invalid'); hasError = true; }
-    if (!email || !isValidEmail(email)) { form.email.classList.add('invalid'); hasError = true; }
+    if (!phone) { form.phone.classList.add('invalid'); hasError = true; }
+    if (!projectType) { form.projectType.classList.add('invalid'); hasError = true; }
     if (!message) { form.message.classList.add('invalid'); hasError = true; }
 
     if (hasError) {
-      status.textContent = 'Please fill in your name, a valid email, and a message.';
+      status.textContent = 'Please fill in your name, phone, project type, and project details.';
       status.classList.add('error');
       return;
     }
 
-    const subject = encodeURIComponent(form.subject.value.trim() || `Portfolio inquiry from ${name}`);
-    const body = encodeURIComponent(`Hi Abhishek,\n\n${message}\n\n- ${name}\n${email}`);
-    const mailto = `mailto:neupaneabhishek98@gmail.com?subject=${subject}&body=${body}`;
+    const quoteMessage = [
+      'Hi Abhishek, I would like to request a quotation.',
+      '',
+      `Name: ${name}`,
+      `WhatsApp / Phone: ${phone}`,
+      `Project Type: ${projectType}`,
+      `Estimated Budget: ${budget || 'Not specified'}`,
+      '',
+      `Project Details: ${message}`,
+    ].join('\n');
 
-    status.textContent = 'Opening your email app... Thanks for reaching out!';
+    const whatsapp = `https://wa.me/9779708380994?text=${encodeURIComponent(quoteMessage)}`;
+
+    status.textContent = 'Forwarding your quotation request to WhatsApp...';
     status.classList.add('success');
-    window.location.href = mailto;
+    window.location.href = whatsapp;
 
     setTimeout(() => { form.reset(); }, 800);
   });
