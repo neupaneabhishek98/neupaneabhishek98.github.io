@@ -104,11 +104,11 @@ document.addEventListener('DOMContentLoaded', () => {
      Slides advance every 2.5s with the typed phrase + brand staying in sync.
   ---------------------------------------------------------------- */
   const buildItems = [
-    { phrase: 'Portfolio Sites',   brand: 'Personal Portfolio', slide: 1 },
-    { phrase: 'Web Experiences',   brand: 'Responsive Websites', slide: 2 },
-    { phrase: 'Clean Interfaces',  brand: 'Interface Systems', slide: 3 },
-    { phrase: 'Practical Apps',    brand: 'JavaScript Projects', slide: 4 },
-    { phrase: 'Useful Products',   brand: 'Remote-Ready Work', slide: 5 },
+    { phrase: 'Portfolio Sites', brand: 'Personal Portfolio', slide: 1 },
+    { phrase: 'Web Experiences', brand: 'Responsive Websites', slide: 2 },
+    { phrase: 'Clean Interfaces', brand: 'Interface Systems', slide: 3 },
+    { phrase: 'Practical Apps', brand: 'JavaScript Projects', slide: 4 },
+    { phrase: 'Useful Products', brand: 'Remote-Ready Work', slide: 5 },
   ];
 
   const typedEl = document.querySelector('.typed-text');
@@ -193,6 +193,7 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Contact Form ---------- */
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
+  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -200,39 +201,37 @@ document.addEventListener('DOMContentLoaded', () => {
     status.className = 'form-status';
 
     const name = form.name.value.trim();
-    const phone = form.phone.value.trim();
-    const projectType = form.projectType.value.trim();
-    const budget = form.budget.value.trim();
+    const email = form.email.value.trim();
+    const subject = form.subject.value.trim();
     const message = form.message.value.trim();
 
-    [form.name, form.phone, form.projectType, form.message].forEach(f => f.classList.remove('invalid'));
+    [form.name, form.email, form.subject, form.message].forEach(f => f.classList.remove('invalid'));
 
     let hasError = false;
     if (!name) { form.name.classList.add('invalid'); hasError = true; }
-    if (!phone) { form.phone.classList.add('invalid'); hasError = true; }
-    if (!projectType) { form.projectType.classList.add('invalid'); hasError = true; }
+    if (!email || !isValidEmail(email)) { form.email.classList.add('invalid'); hasError = true; }
+    if (!subject) { form.subject.classList.add('invalid'); hasError = true; }
     if (!message) { form.message.classList.add('invalid'); hasError = true; }
 
     if (hasError) {
-      status.textContent = 'Please fill in your name, phone, project type, and project details.';
+      status.textContent = 'Please fill in your name, valid email, subject, and message.';
       status.classList.add('error');
       return;
     }
 
-    const quoteMessage = [
-      'Hi Abhishek, I would like to request a quotation.',
+    const contactMessage = [
+      'Hi Abhishek, I would like to connect.',
       '',
       `Name: ${name}`,
-      `WhatsApp / Phone: ${phone}`,
-      `Project Type: ${projectType}`,
-      `Estimated Budget: ${budget || 'Not specified'}`,
+      `Email: ${email}`,
+      `Subject: ${subject}`,
       '',
-      `Project Details: ${message}`,
+      `Message: ${message}`,
     ].join('\n');
 
-    const whatsapp = `https://wa.me/9779708380994?text=${encodeURIComponent(quoteMessage)}`;
+    const whatsapp = `https://wa.me/9779708380994?text=${encodeURIComponent(contactMessage)}`;
 
-    status.textContent = 'Forwarding your quotation request to WhatsApp...';
+    status.textContent = 'Opening WhatsApp with your message...';
     status.classList.add('success');
     window.location.href = whatsapp;
 
