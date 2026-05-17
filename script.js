@@ -96,6 +96,45 @@ document.addEventListener('DOMContentLoaded', () => {
 
   revealEls.forEach(el => io.observe(el));
 
+  /* ---------- Selected work carousel ---------- */
+  const portfolioTrack = document.getElementById('portfolioTrack');
+  const portfolioPrev = document.querySelector('.portfolio-arrow-prev');
+  const portfolioNext = document.querySelector('.portfolio-arrow-next');
+
+  if (portfolioTrack) {
+    const getStep = () => {
+      const firstCard = portfolioTrack.querySelector('.project-card');
+      if (!firstCard) return 0;
+
+      const gap = Number.parseFloat(getComputedStyle(portfolioTrack).columnGap || '0');
+      return firstCard.getBoundingClientRect().width + gap;
+    };
+
+    const movePortfolio = (direction = 1) => {
+      const step = getStep();
+      if (!step) return;
+
+      const maxScroll = portfolioTrack.scrollWidth - portfolioTrack.clientWidth;
+      const nextLeft = portfolioTrack.scrollLeft + (step * direction);
+
+      if (direction > 0 && nextLeft >= maxScroll - 4) {
+        portfolioTrack.scrollTo({ left: 0, behavior: 'smooth' });
+        return;
+      }
+
+      if (direction < 0 && nextLeft <= 0) {
+        portfolioTrack.scrollTo({ left: maxScroll, behavior: 'smooth' });
+        return;
+      }
+
+      portfolioTrack.scrollBy({ left: step * direction, behavior: 'smooth' });
+    };
+
+    portfolioPrev?.addEventListener('click', () => movePortfolio(-1));
+    portfolioNext?.addEventListener('click', () => movePortfolio(1));
+    setInterval(() => movePortfolio(1), 3000);
+  }
+
   /* ---------- Hero: paired typewriter + showcase carousel ----------
      Each "build item" pairs:
        - a short typed phrase (what you build)

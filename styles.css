@@ -236,15 +236,19 @@ textarea {
   justify-content: center;
   width: 36px;
   height: 36px;
-  border-radius: 10px;
-  background: var(--grad);
+  border-radius: 12px;
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.38), rgba(255, 255, 255, 0) 42%),
+    linear-gradient(135deg, #2563eb 0%, #0ea5e9 52%, #38bdf8 100%);
   color: white;
-  box-shadow: 0 8px 20px rgba(37, 99, 235, 0.4);
+  box-shadow: 0 10px 20px rgba(37, 99, 235, 0.34), inset 0 1px 0 rgba(255, 255, 255, 0.36);
+  perspective: 120px;
 }
 
-.logo-mark svg {
-  width: 18px;
-  height: 18px;
+.logo-mark i {
+  font-size: 1.05rem;
+  filter: drop-shadow(0 4px 5px rgba(0, 0, 0, 0.22));
+  transform: rotateX(12deg) rotateY(-18deg);
 }
 
 .logo-text {
@@ -794,13 +798,51 @@ textarea {
 }
 
 /* ---------- Portfolio ---------- */
-.portfolio-grid {
+.portfolio-carousel {
+  position: relative;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  gap: 14px;
+  align-items: center;
+}
+
+.portfolio-grid {
+  display: flex;
   gap: 24px;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: none;
+  padding: 4px 2px 18px;
+}
+
+.portfolio-grid::-webkit-scrollbar {
+  display: none;
+}
+
+.portfolio-arrow {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: var(--bg-elev);
+  border: 1px solid var(--border);
+  color: var(--text);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.2s var(--ease), border-color 0.2s ease, color 0.2s ease;
+  z-index: 1;
+}
+
+.portfolio-arrow:hover {
+  color: var(--primary);
+  border-color: var(--primary);
+  transform: translateY(-2px);
 }
 
 .project-card {
+  flex: 0 0 clamp(280px, calc((100% - 48px) / 3), 360px);
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -808,6 +850,7 @@ textarea {
   transition: box-shadow 0.3s var(--ease), border-color 0.3s var(--ease);
   display: flex;
   flex-direction: column;
+  scroll-snap-align: start;
 }
 
 .project-card:hover {
@@ -945,6 +988,20 @@ textarea {
   align-items: start;
 }
 
+.credentials-grid {
+  padding: 34px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 24px 60px rgba(15, 23, 42, 0.14);
+}
+
+.credentials-grid .section-kicker,
+.credentials-grid .section-title,
+.credentials-grid .credentials-desc {
+  color: #0e1330;
+}
+
 .credentials-desc,
 .build-desc {
   max-width: 520px;
@@ -958,7 +1015,8 @@ textarea {
 
 .credentials-actions {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   gap: 12px;
   align-items: flex-start;
 }
@@ -985,8 +1043,8 @@ textarea {
 }
 
 .credential-btn-cv {
-  background: var(--bg-elev);
-  color: var(--text);
+  background: #f4f7fb;
+  color: #0e1330;
 }
 
 .credential-btn-cv:hover {
@@ -1014,8 +1072,8 @@ textarea {
 .credential-stat {
   min-height: 150px;
   padding: 26px 22px;
-  background: var(--bg-elev);
-  border: 1px solid var(--border);
+  background: #f7f9fc;
+  border: 1px solid rgba(15, 23, 42, 0.1);
   border-radius: var(--radius);
   box-shadow: var(--shadow-sm);
 }
@@ -1086,27 +1144,21 @@ textarea {
   overflow-wrap: anywhere;
 }
 
-.build-email:hover i {
-  background: #ea4335;
-  border-color: #ea4335;
+.build-facebook:hover i {
+  background: #1877f2;
+  border-color: #1877f2;
   color: #ffffff;
 }
 
-.build-github:hover i {
-  background: #24292f;
-  border-color: #24292f;
+.build-instagram:hover i {
+  background: linear-gradient(135deg, #f58529 0%, #dd2a7b 45%, #8134af 75%, #515bd4 100%);
+  border-color: #dd2a7b;
   color: #ffffff;
 }
 
-.build-linkedin:hover i {
-  background: #0a66c2;
-  border-color: #0a66c2;
-  color: #ffffff;
-}
-
-.build-portfolio:hover i {
-  background: var(--primary);
-  border-color: var(--primary);
+.build-whatsapp:hover i {
+  background: #25d366;
+  border-color: #25d366;
   color: #ffffff;
 }
 
@@ -1656,6 +1708,10 @@ textarea {
   .contact-photo {
     height: 360px;
   }
+
+  .project-card {
+    flex-basis: clamp(280px, 72vw, 360px);
+  }
 }
 
 @media (max-width: 760px) {
@@ -1747,6 +1803,16 @@ textarea {
     padding: 24px;
   }
 
+  .portfolio-carousel {
+    grid-template-columns: 40px minmax(0, 1fr) 40px;
+    gap: 8px;
+  }
+
+  .portfolio-arrow {
+    width: 40px;
+    height: 40px;
+  }
+
   .build-link {
     grid-template-columns: 44px 1fr;
     gap: 12px;
@@ -1810,6 +1876,7 @@ textarea {
 
   .credentials-actions {
     align-items: stretch;
+    flex-direction: column;
   }
 
   .credential-btn {
