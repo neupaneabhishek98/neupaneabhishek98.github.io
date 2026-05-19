@@ -8,24 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---------- Theme Toggle (persisted) ---------- */
-  const themeToggle = document.getElementById('themeToggle');
-  const savedTheme = localStorage.getItem('theme');
-  const initialTheme = savedTheme || 'light';
-  if (initialTheme === 'light') document.documentElement.setAttribute('data-theme', 'light');
-  else document.documentElement.removeAttribute('data-theme');
-
-  themeToggle?.addEventListener('click', () => {
-    const isLight = document.documentElement.getAttribute('data-theme') === 'light';
-    if (isLight) {
-      document.documentElement.removeAttribute('data-theme');
-      localStorage.setItem('theme', 'dark');
-    } else {
-      document.documentElement.setAttribute('data-theme', 'light');
-      localStorage.setItem('theme', 'light');
-    }
-  });
-
   /* ---------- Mobile Menu ---------- */
   const menuToggle = document.getElementById('menuToggle');
   const navLinks = document.getElementById('navLinks');
