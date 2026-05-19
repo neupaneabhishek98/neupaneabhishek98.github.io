@@ -92,29 +92,24 @@ document.addEventListener('DOMContentLoaded', () => {
       return firstCard.getBoundingClientRect().width + gap;
     };
 
-    const movePortfolio = (direction = 1) => {
+    const movePortfolio = () => {
       const step = getStep();
       if (!step) return;
 
       const maxScroll = portfolioTrack.scrollWidth - portfolioTrack.clientWidth;
-      const nextLeft = portfolioTrack.scrollLeft + (step * direction);
+      const nextLeft = portfolioTrack.scrollLeft + step;
 
-      if (direction > 0 && nextLeft >= maxScroll - 4) {
+      if (nextLeft >= maxScroll - 4) {
         portfolioTrack.scrollTo({ left: 0, behavior: 'smooth' });
         return;
       }
 
-      if (direction < 0 && nextLeft <= 0) {
-        portfolioTrack.scrollTo({ left: maxScroll, behavior: 'smooth' });
-        return;
-      }
-
-      portfolioTrack.scrollBy({ left: step * direction, behavior: 'smooth' });
+      portfolioTrack.scrollBy({ left: step, behavior: 'smooth' });
     };
 
-    portfolioPrev?.addEventListener('click', () => movePortfolio(-1));
-    portfolioNext?.addEventListener('click', () => movePortfolio(1));
-    setInterval(() => movePortfolio(1), 3000);
+    portfolioPrev?.addEventListener('click', movePortfolio);
+    portfolioNext?.addEventListener('click', movePortfolio);
+    setInterval(movePortfolio, 3000);
   }
 
   /* ---------- Hero: paired typewriter + showcase carousel ----------
@@ -214,7 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Contact Form ---------- */
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
-  const isValidEmail = (email) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
@@ -222,20 +216,20 @@ document.addEventListener('DOMContentLoaded', () => {
     status.className = 'form-status';
 
     const name = form.name.value.trim();
-    const email = form.email.value.trim();
+    const phone = form.phone.value.trim();
     const subject = form.subject.value.trim();
     const message = form.message.value.trim();
 
-    [form.name, form.email, form.subject, form.message].forEach(f => f.classList.remove('invalid'));
+    [form.name, form.phone, form.subject, form.message].forEach(f => f.classList.remove('invalid'));
 
     let hasError = false;
     if (!name) { form.name.classList.add('invalid'); hasError = true; }
-    if (!email || !isValidEmail(email)) { form.email.classList.add('invalid'); hasError = true; }
+    if (!phone) { form.phone.classList.add('invalid'); hasError = true; }
     if (!subject) { form.subject.classList.add('invalid'); hasError = true; }
     if (!message) { form.message.classList.add('invalid'); hasError = true; }
 
     if (hasError) {
-      status.textContent = 'Please fill in your name, valid email, subject, and message.';
+      status.textContent = 'Please fill in your name, number, subject, and message.';
       status.classList.add('error');
       return;
     }
@@ -244,13 +238,13 @@ document.addEventListener('DOMContentLoaded', () => {
       'Hi Abhishek, I would like to connect.',
       '',
       `Name: ${name}`,
-      `Email: ${email}`,
+      `Number: ${phone}`,
       `Subject: ${subject}`,
       '',
       `Message: ${message}`,
     ].join('\n');
 
-    const whatsapp = `https://wa.me/9779708380994?text=${encodeURIComponent(contactMessage)}`;
+    const whatsapp = `https://wa.me/9779742598237?text=${encodeURIComponent(contactMessage)}`;
 
     status.textContent = 'Opening WhatsApp with your message...';
     status.classList.add('success');

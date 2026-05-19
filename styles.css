@@ -42,11 +42,11 @@
 
 [data-theme="light"] {
   --bg: #d8deea;
-  --bg-elev: #edf1f7;
-  --bg-soft: #cbd3e2;
-  --surface: rgba(15, 23, 42, 0.07);
-  --surface-hover: rgba(15, 23, 42, 0.12);
-  --border: rgba(15, 23, 42, 0.14);
+  --bg-elev: #dfe6f1;
+  --bg-soft: #c3ccd9;
+  --surface: rgba(15, 23, 42, 0.1);
+  --surface-hover: rgba(15, 23, 42, 0.16);
+  --border: rgba(15, 23, 42, 0.18);
   --text: #0e1330;
   --text-muted: #5a6688;
   --text-soft: #2b3253;
@@ -737,10 +737,7 @@ textarea {
 /* ---------- Portfolio ---------- */
 .portfolio-carousel {
   position: relative;
-  display: grid;
-  grid-template-columns: 48px minmax(0, 1fr) 48px;
-  gap: 14px;
-  align-items: center;
+  padding-top: 62px;
 }
 
 .portfolio-grid {
@@ -758,6 +755,8 @@ textarea {
 }
 
 .portfolio-arrow {
+  position: absolute;
+  top: 0;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -770,6 +769,14 @@ textarea {
   box-shadow: var(--shadow-sm);
   transition: transform 0.2s var(--ease), border-color 0.2s ease, color 0.2s ease;
   z-index: 1;
+}
+
+.portfolio-arrow-prev {
+  right: 60px;
+}
+
+.portfolio-arrow-next {
+  right: 2px;
 }
 
 .portfolio-arrow:hover {
@@ -1020,6 +1027,18 @@ textarea {
 .build-whatsapp i {
   background: #25d366;
   border-color: #25d366;
+  color: #ffffff;
+}
+
+.build-github i {
+  background: #24292f;
+  border-color: #24292f;
+  color: #ffffff;
+}
+
+.build-gmail i {
+  background: #ea4335;
+  border-color: #ea4335;
   color: #ffffff;
 }
 
@@ -1669,13 +1688,16 @@ textarea {
   }
 
   .portfolio-carousel {
-    grid-template-columns: 40px minmax(0, 1fr) 40px;
-    gap: 8px;
+    padding-top: 52px;
   }
 
   .portfolio-arrow {
     width: 40px;
     height: 40px;
+  }
+
+  .portfolio-arrow-prev {
+    right: 50px;
   }
 
   .build-link {
