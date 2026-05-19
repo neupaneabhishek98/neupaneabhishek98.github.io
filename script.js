@@ -113,18 +113,17 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- Hero: paired typewriter + showcase carousel ----------
-     Each "build item" pairs:
-       - a short typed phrase (what you build)
-       - a brand name to display below the image
-       - an image slide (1..5) to fade in
+     Each item pairs the typed phrase, recent-work name, and logo slide.
      Slides advance every 2.5s with the typed phrase + brand staying in sync.
   ---------------------------------------------------------------- */
   const buildItems = [
-    { phrase: 'Portfolio Sites', brand: 'Personal Portfolio', slide: 1 },
-    { phrase: 'Web Experiences', brand: 'Responsive Websites', slide: 2 },
-    { phrase: 'Clean Interfaces', brand: 'Interface Systems', slide: 3 },
-    { phrase: 'Practical Apps', brand: 'JavaScript Projects', slide: 4 },
-    { phrase: 'Useful Products', brand: 'Remote-Ready Work', slide: 5 },
+    { phrase: 'for Effort Academy', brand: 'Effort Academy', slide: 1 },
+    { phrase: 'for Gorkha MSS', brand: 'Gorkha MSS', slide: 2 },
+    { phrase: 'for Khajalaya', brand: 'Khajalaya', slide: 3 },
+    { phrase: 'for Ordash', brand: 'Ordash', slide: 4 },
+    { phrase: 'for Rapti Dental Care', brand: 'Rapti Dental Care', slide: 5 },
+    { phrase: 'for Rotaract', brand: 'Rotaract', slide: 6 },
+    { phrase: 'for Somaithan LH Academy', brand: 'Somaithan LH Academy', slide: 7 },
   ];
 
   const typedEl = document.querySelector('.typed-text');
