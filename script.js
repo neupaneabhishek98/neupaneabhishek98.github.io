@@ -84,6 +84,14 @@ document.addEventListener('DOMContentLoaded', () => {
   const portfolioNext = document.querySelector('.portfolio-arrow-next');
 
   if (portfolioTrack) {
+    const originalCards = Array.from(portfolioTrack.querySelectorAll('.project-card'));
+    originalCards.forEach(card => {
+      const clone = card.cloneNode(true);
+      clone.setAttribute('aria-hidden', 'true');
+      clone.tabIndex = -1;
+      portfolioTrack.appendChild(clone);
+    });
+
     const getStep = () => {
       const firstCard = portfolioTrack.querySelector('.project-card');
       if (!firstCard) return 0;
@@ -96,12 +104,10 @@ document.addEventListener('DOMContentLoaded', () => {
       const step = getStep();
       if (!step) return;
 
-      const maxScroll = portfolioTrack.scrollWidth - portfolioTrack.clientWidth;
-      const nextLeft = portfolioTrack.scrollLeft + step;
+      const loopPoint = portfolioTrack.scrollWidth / 2;
 
-      if (nextLeft >= maxScroll - 4) {
-        portfolioTrack.scrollTo({ left: 0, behavior: 'smooth' });
-        return;
+      if (portfolioTrack.scrollLeft >= loopPoint - step) {
+        portfolioTrack.scrollLeft = portfolioTrack.scrollLeft - loopPoint;
       }
 
       portfolioTrack.scrollBy({ left: step, behavior: 'smooth' });
@@ -113,17 +119,18 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   /* ---------- Hero: paired typewriter + showcase carousel ----------
-     Each item pairs the typed phrase, recent-work name, and logo slide.
+     Each item pairs a typed phrase with a skill shown in the side card.
      Slides advance every 2.5s with the typed phrase + brand staying in sync.
   ---------------------------------------------------------------- */
   const buildItems = [
-    { phrase: 'for Effort Academy', brand: 'Effort Academy', slide: 1 },
-    { phrase: 'for Gorkha MSS', brand: 'Gorkha MSS', slide: 2 },
-    { phrase: 'for Khajalaya', brand: 'Khajalaya', slide: 3 },
-    { phrase: 'for Ordash', brand: 'Ordash', slide: 4 },
-    { phrase: 'for Rapti Dental Care', brand: 'Rapti Dental Care', slide: 5 },
-    { phrase: 'for Rotaract', brand: 'Rotaract', slide: 6 },
-    { phrase: 'for Somaithan LH Academy', brand: 'Somaithan LH Academy', slide: 7 },
+    { phrase: 'Portfolio Sites', brand: 'Softwares', slide: 1 },
+    { phrase: 'Web Experiences', brand: 'Android Apps', slide: 2 },
+    { phrase: 'Clean Interfaces', brand: 'iOS Apps', slide: 3 },
+    { phrase: 'Practical Apps', brand: 'Websites', slide: 4 },
+    { phrase: 'Useful Products', brand: 'Web Applications', slide: 5 },
+    { phrase: 'Portfolio Sites', brand: 'Business Solutions', slide: 6 },
+    { phrase: 'Web Experiences', brand: 'Automation', slide: 7 },
+    { phrase: 'Clean Interfaces', brand: 'AI/ML', slide: 8 },
   ];
 
   const typedEl = document.querySelector('.typed-text');
