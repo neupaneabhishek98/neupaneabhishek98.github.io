@@ -222,11 +222,16 @@ textarea {
 .logo {
   display: inline-flex;
   align-items: center;
-  font-family: var(--font-head);
+  font-family: var(--font-body);
   font-weight: 800;
-  font-size: clamp(1rem, 2vw, 1.22rem);
-  letter-spacing: -0.01em;
+  font-size: clamp(1.02rem, 2vw, 1.24rem);
+  letter-spacing: 0.01em;
   color: var(--text);
+  transition: color 0.2s ease;
+}
+
+.logo:hover {
+  color: var(--primary);
 }
 
 .nav-links {
@@ -265,11 +270,18 @@ textarea {
   display: none;
   flex-direction: column;
   justify-content: space-between;
-  width: 26px;
-  height: 20px;
+  align-items: center;
+  width: 42px;
+  height: 42px;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: var(--bg-elev);
+  box-shadow: var(--shadow-sm);
 }
 
 .menu-toggle span {
+  width: 20px;
   height: 2px;
   background: var(--text);
   border-radius: 2px;
@@ -277,7 +289,7 @@ textarea {
 }
 
 .menu-toggle.open span:nth-child(1) {
-  transform: translateY(9px) rotate(45deg);
+  transform: translateY(10px) rotate(45deg);
 }
 
 .menu-toggle.open span:nth-child(2) {
@@ -285,7 +297,7 @@ textarea {
 }
 
 .menu-toggle.open span:nth-child(3) {
-  transform: translateY(-9px) rotate(-45deg);
+  transform: translateY(-10px) rotate(-45deg);
 }
 
 /* ---------- Hero ---------- */
@@ -412,7 +424,8 @@ textarea {
   display: inline-flex;
   align-items: baseline;
   /* Reserve fixed width matching the longest phrase so layout never shifts */
-  min-width: min(18ch, 100%);
+  width: 18ch;
+  min-width: 18ch;
   min-height: 1.1em;
   position: relative;
   overflow: visible;
@@ -528,14 +541,14 @@ textarea {
   justify-content: center;
   width: 100%;
   height: 100%;
-  background: var(--bg-elev);
+  background: var(--bg-soft);
   color: var(--primary);
   font-size: clamp(4.6rem, 11vw, 6.8rem);
   will-change: transform, opacity;
 }
 
 .skill-software {
-  color: #2563eb;
+  color: #18181b;
 }
 
 .skill-android {
@@ -543,31 +556,31 @@ textarea {
 }
 
 .skill-ios {
-  color: #111827;
+  color: #111111;
 }
 
 .skill-websites {
-  color: #0ea5e9;
+  color: #18181b;
 }
 
 .skill-webapps {
-  color: #7c3aed;
+  color: #18181b;
 }
 
 .skill-business {
-  color: #f59e0b;
+  color: #18181b;
 }
 
 .skill-automation {
-  color: #0891b2;
+  color: #18181b;
 }
 
 .skill-ai {
-  color: #ec4899;
+  color: #18181b;
 }
 
 .skill-ml {
-  color: #10b981;
+  color: #18181b;
 }
 
 .showcase-meta {
@@ -832,15 +845,16 @@ textarea {
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 26px;
+  padding: 14px;
 }
 
 .project-body {
-  padding: 24px;
+  padding: 22px;
   flex-grow: 1;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  min-height: 124px;
 }
 
 .project-card h3 {
@@ -862,7 +876,7 @@ textarea {
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
-  margin-bottom: 16px;
+  margin-top: 14px;
 }
 
 .project-stack span {
@@ -951,7 +965,7 @@ textarea {
 .credential-stat strong {
   display: block;
   margin-bottom: 9px;
-  color: var(--primary);
+  color: #111111;
   font-family: var(--font-head);
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1;
@@ -981,6 +995,10 @@ textarea {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .build-link {
@@ -1608,7 +1626,13 @@ textarea {
   }
 
   .project-card {
-    flex-basis: clamp(280px, 72vw, 360px);
+    flex-basis: calc((100% - 48px) / 3);
+  }
+}
+
+@media (min-width: 1360px) {
+  .project-card {
+    flex-basis: calc((100% - 96px) / 5);
   }
 }
 
@@ -1631,13 +1655,16 @@ textarea {
     width: min(78vw, 320px);
     flex-direction: column;
     align-items: flex-start;
-    background: var(--bg-elev);
+    background: #f0f2fa;
     border-left: 1px solid var(--border);
     padding: 36px 28px;
     gap: 22px;
     transform: translateX(100%);
     transition: transform 0.35s var(--ease);
     box-shadow: var(--shadow-lg);
+    z-index: 99;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
   }
 
   .nav-links.open {
@@ -1664,6 +1691,25 @@ textarea {
     padding: calc(var(--nav-h) + 30px) 0 60px;
   }
 
+  .hero-content {
+    gap: 34px;
+  }
+
+  .showcase-wrapper {
+    width: min(300px, calc(100vw - 88px));
+  }
+
+  .showcase-decor {
+    inset: -10px;
+  }
+
+  .showcase-card {
+    min-height: 320px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
   .hero-cta {
     flex-direction: column;
     align-items: stretch;
@@ -1677,6 +1723,16 @@ textarea {
     flex-direction: column;
     gap: 4px;
     align-items: center;
+    min-height: 2.75em;
+  }
+
+  .hero-title {
+    width: 100%;
+    letter-spacing: -0.055em;
+  }
+
+  .hero-line-1 {
+    white-space: nowrap;
   }
 
   .hero-line-2 {
@@ -1686,8 +1742,14 @@ textarea {
   }
 
   .typed-wrap {
+    width: min(18ch, 100%);
     min-width: min(18ch, 100%);
+    min-height: 1.35em;
     justify-content: center;
+  }
+
+  .project-card {
+    flex-basis: 100%;
   }
 
   .cv-column {
@@ -1713,7 +1775,11 @@ textarea {
   }
 
   .portfolio-arrow-prev {
-    left: 10px;
+    left: 0;
+  }
+
+  .portfolio-arrow-next {
+    right: 0;
   }
 
   .build-link {
@@ -1754,6 +1820,10 @@ textarea {
 @media (max-width: 420px) {
   .container {
     padding: 0 18px;
+  }
+
+  .showcase-wrapper {
+    width: min(280px, calc(100vw - 76px));
   }
 
   .hero-eyebrow {
