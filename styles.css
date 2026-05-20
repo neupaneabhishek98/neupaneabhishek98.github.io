@@ -15,14 +15,14 @@
   --text: #e6ecff;
   --text-muted: #9aa6c8;
   --text-soft: #c5cce0;
-  --primary: #2563eb;
-  --primary-2: #0284c7;
-  --accent: #38bdf8;
-  --yellow: #facc15;
-  --yellow-soft: #fde047;
+  --primary: #0b2d5c;
+  --primary-2: #164f8f;
+  --accent: #d6a84f;
+  --yellow: #d6a84f;
+  --yellow-soft: #f1d27a;
   --success: #34d399;
   --danger: #f87171;
-  --grad: linear-gradient(135deg, #2563eb 0%, #0ea5e9 52%, #38bdf8 100%);
+  --grad: linear-gradient(135deg, #0b2d5c 0%, #164f8f 58%, #d6a84f 100%);
 
   --radius-sm: 8px;
   --radius: 14px;
@@ -175,7 +175,7 @@ textarea {
 }
 
 .btn-primary:hover {
-  background: #1d4ed8;
+  background: #08244a;
 }
 
 .btn-secondary {
@@ -328,7 +328,7 @@ textarea {
 .blob-1 {
   width: 500px;
   height: 500px;
-  background: radial-gradient(circle, #2563eb 0%, transparent 70%);
+  background: radial-gradient(circle, #0b2d5c 0%, transparent 70%);
   top: -100px;
   left: -100px;
 }
@@ -336,7 +336,7 @@ textarea {
 .blob-2 {
   width: 480px;
   height: 480px;
-  background: radial-gradient(circle, #22d3ee 0%, transparent 70%);
+  background: radial-gradient(circle, #d6a84f 0%, transparent 70%);
   bottom: -120px;
   right: -80px;
   animation-delay: -7s;
@@ -813,7 +813,7 @@ textarea {
 }
 
 .project-card {
-  flex: 0 0 calc((100% - 72px) / 4);
+  flex: 0 0 calc((100% - 48px) / 3);
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -998,7 +998,7 @@ textarea {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
 }
 
 .build-link {
@@ -1334,12 +1334,12 @@ textarea {
 
 .contact-phone:hover,
 .contact-phone:hover i {
-  color: #2563eb;
+  color: var(--primary);
 }
 
 .contact-phone:hover i {
-  background: #2563eb;
-  border-color: #2563eb;
+  background: var(--primary);
+  border-color: var(--primary);
   color: #ffffff;
 }
 
@@ -1403,7 +1403,7 @@ textarea {
 }
 
 .form-group {
-  margin-bottom: 18px;
+  margin-bottom: 13px;
 }
 
 .form-group label {
@@ -1417,7 +1417,7 @@ textarea {
 .form-group input,
 .form-group textarea {
   width: 100%;
-  padding: 14px 16px;
+  padding: 12px 16px;
   background: var(--bg-soft);
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -1430,6 +1430,7 @@ textarea {
 
 .form-group textarea {
   font-size: 0.9rem;
+  min-height: 112px;
 }
 
 .form-group input::placeholder,
@@ -1441,7 +1442,7 @@ textarea {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.18);
+  box-shadow: 0 0 0 4px rgba(11, 45, 92, 0.18);
 }
 
 .form-group input.invalid,
@@ -1630,15 +1631,15 @@ textarea {
   }
 }
 
-@media (min-width: 1360px) {
+@media (min-width: 1440px) {
   .project-card {
-    flex-basis: calc((100% - 96px) / 5);
+    flex-basis: calc((100% - 72px) / 4);
   }
 }
 
-@media (min-width: 981px) and (max-width: 1180px) {
+@media (min-width: 1680px) {
   .project-card {
-    flex-basis: calc((100% - 72px) / 4);
+    flex-basis: calc((100% - 96px) / 5);
   }
 }
 
