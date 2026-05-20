@@ -766,28 +766,29 @@ textarea {
   justify-content: center;
   width: 54px;
   height: auto;
-  border-radius: var(--radius);
-  background: color-mix(in srgb, var(--bg-elev) 92%, #ffffff);
-  border: 1px solid var(--border);
+  border-radius: 0;
+  background: color-mix(in srgb, var(--bg-elev) 82%, transparent);
+  border: 0;
   color: var(--text);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.2s var(--ease), border-color 0.2s ease, color 0.2s ease;
+  box-shadow: none;
+  opacity: 0.18;
+  transition: opacity 0.2s ease, background 0.2s ease, color 0.2s ease;
   z-index: 3;
   backdrop-filter: blur(8px);
 }
 
 .portfolio-arrow-prev {
-  left: max(8px, calc((100vw - var(--container)) / 2 + 8px));
+  left: 0;
 }
 
 .portfolio-arrow-next {
-  right: max(8px, calc((100vw - var(--container)) / 2 + 8px));
+  right: 0;
 }
 
 .portfolio-arrow:hover {
   color: var(--primary);
-  border-color: var(--primary);
-  transform: translateY(-2px) scale(1.04);
+  background: color-mix(in srgb, var(--bg-elev) 94%, #ffffff);
+  opacity: 0.86;
 }
 
 .project-card {
@@ -1762,11 +1763,11 @@ textarea {
   }
 
   .portfolio-arrow-prev {
-    left: 6px;
+    left: 0;
   }
 
   .portfolio-arrow-next {
-    right: 6px;
+    right: 0;
   }
 
   .build-link {
