@@ -42,8 +42,8 @@
 
 [data-theme="light"] {
   --bg: #d8deea;
-  --bg-elev: #f8f8ff;
-  --bg-soft: #eef1fb;
+  --bg-elev: #f0f2fa;
+  --bg-soft: #e4e8f4;
   --surface: rgba(15, 23, 42, 0.1);
   --surface-hover: rgba(15, 23, 42, 0.16);
   --border: rgba(15, 23, 42, 0.18);
@@ -513,13 +513,13 @@ textarea {
   position: absolute;
   inset: 0;
   opacity: 0;
-  transform: scale(1.04);
-  transition: opacity 0.7s var(--ease), transform 0.7s var(--ease);
+  transform: translateY(12px) scale(0.9);
+  transition: opacity 0.55s var(--ease), transform 0.55s var(--ease);
 }
 
 .showcase-slide.active {
   opacity: 1;
-  transform: scale(1);
+  transform: translateY(0) scale(1);
 }
 
 .showcase-skill-icon {
@@ -530,7 +530,44 @@ textarea {
   height: 100%;
   background: var(--bg-elev);
   color: var(--primary);
-  font-size: clamp(3.4rem, 9vw, 5rem);
+  font-size: clamp(4.6rem, 11vw, 6.8rem);
+  will-change: transform, opacity;
+}
+
+.skill-software {
+  color: #2563eb;
+}
+
+.skill-android {
+  color: #3ddc84;
+}
+
+.skill-ios {
+  color: #111827;
+}
+
+.skill-websites {
+  color: #0ea5e9;
+}
+
+.skill-webapps {
+  color: #7c3aed;
+}
+
+.skill-business {
+  color: #f59e0b;
+}
+
+.skill-automation {
+  color: #0891b2;
+}
+
+.skill-ai {
+  color: #ec4899;
+}
+
+.skill-ml {
+  color: #10b981;
 }
 
 .showcase-meta {
@@ -714,7 +751,6 @@ textarea {
 /* ---------- Portfolio ---------- */
 .portfolio-carousel {
   position: relative;
-  padding-top: 62px;
 }
 
 .portfolio-grid {
@@ -733,37 +769,38 @@ textarea {
 
 .portfolio-arrow {
   position: absolute;
-  top: 0;
+  top: 42%;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 46px;
   height: 46px;
   border-radius: 50%;
-  background: var(--bg-elev);
+  background: color-mix(in srgb, var(--bg-elev) 92%, #ffffff);
   border: 1px solid var(--border);
   color: var(--text);
   box-shadow: var(--shadow-sm);
   transition: transform 0.2s var(--ease), border-color 0.2s ease, color 0.2s ease;
-  z-index: 1;
+  z-index: 3;
+  backdrop-filter: blur(8px);
 }
 
 .portfolio-arrow-prev {
-  right: 60px;
+  left: 14px;
 }
 
 .portfolio-arrow-next {
-  right: 2px;
+  right: 14px;
 }
 
 .portfolio-arrow:hover {
   color: var(--primary);
   border-color: var(--primary);
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.04);
 }
 
 .project-card {
-  flex: 0 0 clamp(280px, calc((100% - 48px) / 3), 360px);
+  flex: 0 0 calc((100% - 72px) / 4);
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -773,6 +810,7 @@ textarea {
   flex-direction: column;
   scroll-snap-align: start;
   color: inherit;
+  min-width: 0;
 }
 
 .project-card:hover {
@@ -802,6 +840,7 @@ textarea {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
 }
 
 .project-card h3 {
@@ -852,7 +891,7 @@ textarea {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(320px, 1fr);
   gap: 56px;
-  align-items: start;
+  align-items: stretch;
 }
 
 .credentials-grid {
@@ -861,6 +900,14 @@ textarea {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
+  align-items: center;
+  min-height: 320px;
+}
+
+.credentials-copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .credentials-desc,
@@ -880,6 +927,10 @@ textarea {
   flex-wrap: wrap;
   gap: 12px;
   align-items: flex-start;
+}
+
+.credential-stats {
+  align-self: center;
 }
 
 .credential-stats {
@@ -920,12 +971,16 @@ textarea {
 }
 
 .build-grid {
+  align-items: stretch;
+}
+
+.build-copy,
+.build .contact-form {
   padding: 34px;
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
-  align-items: stretch;
 }
 
 .build-link {
@@ -1007,13 +1062,6 @@ textarea {
 
 .build-form {
   min-height: 100%;
-}
-
-.build .contact-form {
-  padding: 0;
-  background: transparent;
-  border: 0;
-  border-radius: 0;
 }
 
 /* ---------- CV ---------- */
@@ -1564,6 +1612,12 @@ textarea {
   }
 }
 
+@media (min-width: 981px) and (max-width: 1180px) {
+  .project-card {
+    flex-basis: calc((100% - 72px) / 4);
+  }
+}
+
 @media (max-width: 760px) {
   .menu-toggle {
     display: flex;
@@ -1653,17 +1707,13 @@ textarea {
     padding: 24px;
   }
 
-  .portfolio-carousel {
-    padding-top: 52px;
-  }
-
   .portfolio-arrow {
     width: 40px;
     height: 40px;
   }
 
   .portfolio-arrow-prev {
-    right: 50px;
+    left: 10px;
   }
 
   .build-link {

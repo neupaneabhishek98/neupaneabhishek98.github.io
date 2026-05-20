@@ -113,9 +113,19 @@ document.addEventListener('DOMContentLoaded', () => {
       portfolioTrack.scrollBy({ left: step, behavior: 'smooth' });
     };
 
-    portfolioPrev?.addEventListener('click', movePortfolio);
+    portfolioPrev?.addEventListener('click', () => {
+      const step = getStep();
+      if (!step) return;
+
+      const loopPoint = portfolioTrack.scrollWidth / 2;
+      if (portfolioTrack.scrollLeft <= step) {
+        portfolioTrack.scrollLeft = portfolioTrack.scrollLeft + loopPoint;
+      }
+
+      portfolioTrack.scrollBy({ left: -step, behavior: 'smooth' });
+    });
     portfolioNext?.addEventListener('click', movePortfolio);
-    setInterval(movePortfolio, 3000);
+    setInterval(movePortfolio, 2500);
   }
 
   /* ---------- Hero: paired typewriter + showcase carousel ----------
@@ -130,7 +140,8 @@ document.addEventListener('DOMContentLoaded', () => {
     { phrase: 'Useful Products', brand: 'Web Applications', slide: 5 },
     { phrase: 'Portfolio Sites', brand: 'Business Solutions', slide: 6 },
     { phrase: 'Web Experiences', brand: 'Automation', slide: 7 },
-    { phrase: 'Clean Interfaces', brand: 'AI/ML', slide: 8 },
+    { phrase: 'Clean Interfaces', brand: 'Artificial Intelligence', slide: 8 },
+    { phrase: 'Practical Apps', brand: 'Machine Learning', slide: 9 },
   ];
 
   const typedEl = document.querySelector('.typed-text');
