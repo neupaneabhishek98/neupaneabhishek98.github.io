@@ -84,14 +84,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const portfolioNext = document.querySelector('.portfolio-arrow-next');
 
   if (portfolioTrack) {
-    const originalCards = Array.from(portfolioTrack.querySelectorAll('.project-card'));
-    originalCards.forEach(card => {
-      const clone = card.cloneNode(true);
-      clone.setAttribute('aria-hidden', 'true');
-      clone.tabIndex = -1;
-      portfolioTrack.appendChild(clone);
-    });
-
     const getStep = () => {
       const firstCard = portfolioTrack.querySelector('.project-card');
       if (!firstCard) return 0;
@@ -100,29 +92,36 @@ document.addEventListener('DOMContentLoaded', () => {
       return firstCard.getBoundingClientRect().width + gap;
     };
 
+    let carouselMoving = false;
+
     const movePortfolio = () => {
       const step = getStep();
-      if (!step) return;
+      const firstCard = portfolioTrack.querySelector('.project-card');
+      if (!step || !firstCard || carouselMoving) return;
 
-      const loopPoint = portfolioTrack.scrollWidth / 2;
-
-      if (portfolioTrack.scrollLeft >= loopPoint - step) {
-        portfolioTrack.scrollLeft = portfolioTrack.scrollLeft - loopPoint;
-      }
-
+      carouselMoving = true;
       portfolioTrack.scrollBy({ left: step, behavior: 'smooth' });
+
+      window.setTimeout(() => {
+        portfolioTrack.appendChild(firstCard);
+        portfolioTrack.scrollLeft = Math.max(portfolioTrack.scrollLeft - step, 0);
+        carouselMoving = false;
+      }, 560);
     };
 
     portfolioPrev?.addEventListener('click', () => {
       const step = getStep();
-      if (!step) return;
+      const lastCard = portfolioTrack.querySelector('.project-card:last-child');
+      if (!step || !lastCard || carouselMoving) return;
 
-      const loopPoint = portfolioTrack.scrollWidth / 2;
-      if (portfolioTrack.scrollLeft <= step) {
-        portfolioTrack.scrollLeft = portfolioTrack.scrollLeft + loopPoint;
-      }
+      carouselMoving = true;
+      portfolioTrack.insertBefore(lastCard, portfolioTrack.firstElementChild);
+      portfolioTrack.scrollLeft = portfolioTrack.scrollLeft + step;
 
       portfolioTrack.scrollBy({ left: -step, behavior: 'smooth' });
+      window.setTimeout(() => {
+        carouselMoving = false;
+      }, 560);
     });
     portfolioNext?.addEventListener('click', movePortfolio);
     setInterval(movePortfolio, 2500);

@@ -126,24 +126,7 @@ textarea {
 }
 
 .gradient-text {
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  background-size: 200% 200%;
-  animation: gradient-shift 8s ease infinite;
-}
-
-@keyframes gradient-shift {
-
-  0%,
-  100% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
+  color: var(--accent);
 }
 
 /* ---------- Buttons ---------- */
@@ -434,10 +417,7 @@ textarea {
 
 .typed-text {
   display: inline-block;
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--primary-2);
   white-space: nowrap;
   padding-right: 0.04em;
 }
@@ -602,10 +582,7 @@ textarea {
   font-family: var(--font-head);
   font-size: clamp(1.3rem, 2.2vw, 1.3rem);
   font-weight: 700;
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--primary-2);
   transition: opacity 0.3s ease;
 }
 
@@ -716,10 +693,7 @@ textarea {
   font-family: var(--font-head);
   font-size: 2rem;
   font-weight: 800;
-  background: var(--grad);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--accent);
   margin-bottom: 4px;
 }
 
@@ -764,6 +738,9 @@ textarea {
 /* ---------- Portfolio ---------- */
 .portfolio-carousel {
   position: relative;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  padding-inline: max(24px, calc((100vw - var(--container)) / 2 + 24px));
 }
 
 .portfolio-grid {
@@ -782,13 +759,14 @@ textarea {
 
 .portfolio-arrow {
   position: absolute;
-  top: 42%;
+  top: 4px;
+  bottom: 18px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
+  width: 54px;
+  height: auto;
+  border-radius: var(--radius);
   background: color-mix(in srgb, var(--bg-elev) 92%, #ffffff);
   border: 1px solid var(--border);
   color: var(--text);
@@ -799,11 +777,11 @@ textarea {
 }
 
 .portfolio-arrow-prev {
-  left: 14px;
+  left: max(8px, calc((100vw - var(--container)) / 2 + 8px));
 }
 
 .portfolio-arrow-next {
-  right: 14px;
+  right: max(8px, calc((100vw - var(--container)) / 2 + 8px));
 }
 
 .portfolio-arrow:hover {
@@ -839,6 +817,14 @@ textarea {
   align-items: center;
   justify-content: center;
   background: #ffffff;
+}
+
+.project-khajalaya .project-thumb {
+  background: #18191b;
+}
+
+.project-ordash .project-thumb {
+  background: #030618;
 }
 
 .project-logo {
@@ -1771,16 +1757,16 @@ textarea {
   }
 
   .portfolio-arrow {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: auto;
   }
 
   .portfolio-arrow-prev {
-    left: 0;
+    left: 6px;
   }
 
   .portfolio-arrow-next {
-    right: 0;
+    right: 6px;
   }
 
   .build-link {
