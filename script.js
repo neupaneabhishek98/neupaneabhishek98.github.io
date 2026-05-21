@@ -93,8 +93,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let carouselMoving = false;
+    let carouselTimer = null;
+    let carouselMotionTimer = null;
+    const CAROUSEL_DELAY = 2500;
+    const CAROUSEL_MOTION = 640;
 
     const movePortfolio = () => {
+      if (document.hidden) return;
+
       const step = getStep();
       const firstCard = portfolioTrack.querySelector('.project-card');
       if (!step || !firstCard || carouselMoving) return;
@@ -102,16 +108,34 @@ document.addEventListener('DOMContentLoaded', () => {
       carouselMoving = true;
       portfolioTrack.scrollBy({ left: step, behavior: 'smooth' });
 
-      window.setTimeout(() => {
+      carouselMotionTimer = window.setTimeout(() => {
         portfolioTrack.appendChild(firstCard);
         portfolioTrack.scrollLeft = Math.max(portfolioTrack.scrollLeft - step, 0);
         carouselMoving = false;
-      }, 560);
+        carouselMotionTimer = null;
+      }, CAROUSEL_MOTION);
+    };
+
+    const startCarousel = () => {
+      if (!carouselTimer) carouselTimer = window.setInterval(movePortfolio, CAROUSEL_DELAY);
+    };
+
+    const stopCarousel = () => {
+      if (!carouselTimer) return;
+      window.clearInterval(carouselTimer);
+      carouselTimer = null;
+      if (carouselMotionTimer) {
+        window.clearTimeout(carouselMotionTimer);
+        carouselMotionTimer = null;
+      }
+      portfolioTrack.scrollLeft = 0;
+      carouselMoving = false;
     };
 
     portfolioPrev?.addEventListener('click', () => {
       const step = getStep();
       const lastCard = portfolioTrack.querySelector('.project-card:last-child');
+      if (document.hidden) return;
       if (!step || !lastCard || carouselMoving) return;
 
       carouselMoving = true;
@@ -119,12 +143,24 @@ document.addEventListener('DOMContentLoaded', () => {
       portfolioTrack.scrollLeft = portfolioTrack.scrollLeft + step;
 
       portfolioTrack.scrollBy({ left: -step, behavior: 'smooth' });
-      window.setTimeout(() => {
+      carouselMotionTimer = window.setTimeout(() => {
         carouselMoving = false;
-      }, 560);
+        carouselMotionTimer = null;
+      }, CAROUSEL_MOTION);
     });
+
     portfolioNext?.addEventListener('click', movePortfolio);
-    setInterval(movePortfolio, 2500);
+
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) {
+        stopCarousel();
+        return;
+      }
+
+      startCarousel();
+    });
+
+    startCarousel();
   }
 
   /* ---------- Hero: paired typewriter + showcase carousel ----------
@@ -132,15 +168,15 @@ document.addEventListener('DOMContentLoaded', () => {
      Slides advance every 2.5s with the typed phrase + brand staying in sync.
   ---------------------------------------------------------------- */
   const buildItems = [
-    { phrase: 'Portfolio Sites', brand: 'Softwares', slide: 1 },
-    { phrase: 'Web Experiences', brand: 'Android Apps', slide: 2 },
+    { phrase: 'Practical Apps', brand: 'Android Apps', slide: 1 },
+    { phrase: 'Useful Products', brand: 'Web Applications', slide: 2 },
     { phrase: 'Clean Interfaces', brand: 'iOS Apps', slide: 3 },
-    { phrase: 'Practical Apps', brand: 'Websites', slide: 4 },
-    { phrase: 'Useful Products', brand: 'Web Applications', slide: 5 },
-    { phrase: 'Portfolio Sites', brand: 'Business Solutions', slide: 6 },
-    { phrase: 'Web Experiences', brand: 'Automation', slide: 7 },
-    { phrase: 'Clean Interfaces', brand: 'Artificial Intelligence', slide: 8 },
-    { phrase: 'Practical Apps', brand: 'Machine Learning', slide: 9 },
+    { phrase: 'PC Softwares', brand: 'PC Softwares', slide: 4 },
+    { phrase: 'Websites', brand: 'Websites', slide: 5 },
+    { phrase: 'Digital Marketing', brand: 'Digital Marketing', slide: 6 },
+    { phrase: 'Graphic Design', brand: 'Graphic Design', slide: 7 },
+    { phrase: 'UI/UX Design', brand: 'UI/UX Design', slide: 8 },
+    { phrase: 'Business Solutions', brand: 'Business Solutions', slide: 9 },
   ];
 
   const typedEl = document.querySelector('.typed-text');
