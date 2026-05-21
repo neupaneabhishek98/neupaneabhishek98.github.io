@@ -18,6 +18,7 @@
   --color-yellow-soft: #ffe66b;
   --brand-facebook: #1877f2;
   --brand-instagram: #dd2a7b;
+  --brand-instagram-gradient: linear-gradient(135deg, #f58529 0%, #dd2a7b 45%, #8134af 75%, #515bd4 100%);
   --brand-whatsapp: #25d366;
   --brand-github: #24292f;
   --brand-gmail: #ea4335;
@@ -1075,7 +1076,7 @@ textarea {
 }
 
 .build-instagram i {
-  background: var(--brand-instagram);
+  background: var(--brand-instagram-gradient);
   border-color: var(--brand-instagram);
   color: var(--color-white);
 }
@@ -1411,7 +1412,7 @@ textarea {
 }
 
 .social-instagram:hover {
-  background: var(--brand-instagram);
+  background: var(--brand-instagram-gradient);
 }
 
 .social-facebook:hover {
@@ -1427,7 +1428,7 @@ textarea {
 }
 
 .form-group {
-  margin-bottom: 13px;
+  margin-bottom: 11px;
 }
 
 .form-group label {
@@ -1454,7 +1455,8 @@ textarea {
 
 .form-group textarea {
   font-size: 0.9rem;
-  min-height: 112px;
+  height: 72px;
+  min-height: 72px;
 }
 
 .form-group input::placeholder,
@@ -1504,7 +1506,7 @@ textarea {
 
 .footer-top {
   display: grid;
-  grid-template-columns: minmax(260px, 1.5fr) minmax(150px, 1fr) repeat(2, 96px) minmax(130px, 0.8fr);
+  grid-template-columns: minmax(260px, 1.5fr) minmax(150px, 1fr) minmax(130px, 0.8fr);
   gap: 42px;
   align-items: start;
 }
@@ -1593,7 +1595,7 @@ textarea {
   min-width: 112px;
   gap: 9px;
   padding: 0 18px;
-  border-radius: 999px;
+  border-radius: 4px;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.1em;
@@ -1627,8 +1629,8 @@ textarea {
 
 .footer-copy a {
   color: inherit;
-  font-family: var(--font-head);
-  font-weight: 800;
+  font-family: inherit;
+  font-weight: 500;
   transition: color 0.2s ease;
 }
 
