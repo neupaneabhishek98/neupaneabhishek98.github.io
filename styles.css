@@ -6,41 +6,43 @@
 
 /* ---------- Design Tokens ---------- */
 :root {
-  --color-navy: #0b2d5c;
-  --color-navy-soft: #164f8f;
-  --color-ink: #0f172a;
-  --color-midnight: #0b1020;
-  --color-night: #111831;
+  --color-sky: #219ebc;
+  --color-navy: #023047;
+  --color-yellow: #ffb703;
+  --color-orange: #fb8500;
   --color-white: #ffffff;
-  --color-black: #111111;
   --color-matte: #18181b;
-  --color-yellow: #ffd400;
-  --color-yellow-soft: #ffe66b;
-  --brand-facebook: #1877f2;
-  --brand-instagram: #dd2a7b;
-  --brand-instagram-gradient: linear-gradient(135deg, #f58529 0%, #dd2a7b 45%, #8134af 75%, #515bd4 100%);
-  --brand-whatsapp: #25d366;
-  --brand-github: #24292f;
-  --brand-gmail: #ea4335;
-  --brand-android: #3ddc84;
+  --gray-50: #f0f2fa;
+  --gray-100: #e4e8f4;
+  --gray-200: #d8deea;
+  --gray-500: #5a6688;
+  --gray-800: #2b3253;
 
-  --bg: var(--color-midnight);
-  --bg-elev: var(--color-night);
-  --bg-soft: var(--color-ink);
+  --brand-facebook: var(--color-sky);
+  --brand-instagram: var(--color-orange);
+  --brand-instagram-gradient: linear-gradient(135deg, var(--color-orange) 0%, var(--color-yellow) 48%, var(--color-sky) 100%);
+  --brand-whatsapp: var(--color-sky);
+  --brand-github: var(--color-matte);
+  --brand-gmail: var(--color-orange);
+  --brand-android: var(--color-sky);
+
+  --bg: var(--color-matte);
+  --bg-elev: var(--color-navy);
+  --bg-soft: var(--color-matte);
   --surface: rgba(255, 255, 255, 0.04);
   --surface-hover: rgba(255, 255, 255, 0.08);
   --border: rgba(255, 255, 255, 0.08);
-  --text: #e6ecff;
-  --text-muted: #9aa6c8;
-  --text-soft: #c5cce0;
+  --text: var(--color-white);
+  --text-muted: var(--gray-200);
+  --text-soft: var(--gray-100);
   --primary: var(--color-navy);
-  --primary-2: var(--color-navy-soft);
+  --primary-2: var(--color-sky);
   --accent: var(--color-yellow);
   --yellow: var(--color-yellow);
-  --yellow-soft: var(--color-yellow-soft);
-  --success: #34d399;
-  --danger: #f87171;
-  --grad: linear-gradient(135deg, var(--color-navy) 0%, var(--color-navy-soft) 58%, var(--color-yellow) 100%);
+  --yellow-soft: var(--color-yellow);
+  --success: var(--color-sky);
+  --danger: var(--color-orange);
+  --grad: linear-gradient(135deg, var(--color-navy) 0%, var(--color-sky) 58%, var(--color-yellow) 100%);
 
   --radius-sm: 8px;
   --radius: 14px;
@@ -59,17 +61,17 @@
 }
 
 [data-theme="light"] {
-  --bg: #d8deea;
-  --bg-elev: #f0f2fa;
-  --bg-soft: #e4e8f4;
-  --surface: rgba(15, 23, 42, 0.1);
-  --surface-hover: rgba(15, 23, 42, 0.16);
-  --border: rgba(15, 23, 42, 0.18);
-  --text: #0e1330;
-  --text-muted: #5a6688;
-  --text-soft: #2b3253;
-  --shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
-  --shadow-lg: 0 30px 60px rgba(15, 23, 42, 0.12);
+  --bg: var(--gray-200);
+  --bg-elev: var(--gray-50);
+  --bg-soft: var(--gray-100);
+  --surface: rgba(24, 24, 27, 0.1);
+  --surface-hover: rgba(24, 24, 27, 0.16);
+  --border: rgba(24, 24, 27, 0.18);
+  --text: var(--color-navy);
+  --text-muted: var(--gray-500);
+  --text-soft: var(--gray-800);
+  --shadow: 0 10px 30px rgba(24, 24, 27, 0.08);
+  --shadow-lg: 0 30px 60px rgba(24, 24, 27, 0.12);
 }
 
 /* ---------- Base ---------- */
@@ -176,7 +178,7 @@ textarea {
 }
 
 .btn-primary:hover {
-  background: var(--color-ink);
+  background: var(--color-matte);
 }
 
 .btn-secondary {
@@ -264,7 +266,7 @@ textarea {
   height: 3px;
   background: var(--yellow);
   border-radius: 3px;
-  box-shadow: 0 0 10px rgba(255, 212, 0, 0.52);
+  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 52%, transparent);
 }
 
 .menu-toggle {
@@ -554,7 +556,7 @@ textarea {
 }
 
 .skill-ios {
-  color: var(--color-black);
+  color: var(--color-matte);
 }
 
 .skill-websites {
@@ -853,13 +855,16 @@ textarea {
   background: var(--color-white);
 }
 
-.project-color-lab .project-thumb,
 .project-khajalaya .project-thumb {
   background: var(--color-matte);
 }
 
+.project-color-lab .project-thumb {
+  background: var(--color-white);
+}
+
 .project-ordash .project-thumb {
-  background: var(--color-ink);
+  background: var(--color-navy);
 }
 
 .project-logo {
@@ -902,14 +907,19 @@ textarea {
 
 .project-stack span {
   font-size: 0.72rem;
-  padding: 5px 11px;
-  background: color-mix(in srgb, var(--primary) 10%, var(--bg-elev));
-  border-radius: 999px;
-  color: var(--primary);
-  border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+  color: var(--color-navy);
+  border: 0;
+  box-shadow: none;
   font-weight: 800;
   letter-spacing: 0.02em;
+}
+
+.project-stack span:not(:last-child)::after {
+  content: ",";
+  color: var(--color-orange);
 }
 
 /* ---------- Credentials + Build ---------- */
@@ -1468,13 +1478,13 @@ textarea {
 .form-group textarea:focus {
   outline: none;
   border-color: var(--primary);
-  box-shadow: 0 0 0 4px rgba(11, 45, 92, 0.18);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--primary) 18%, transparent);
 }
 
 .form-group input.invalid,
 .form-group textarea.invalid {
   border-color: var(--danger);
-  box-shadow: 0 0 0 4px rgba(248, 113, 113, 0.18);
+  box-shadow: 0 0 0 4px color-mix(in srgb, var(--danger) 18%, transparent);
 }
 
 .form-status {
@@ -1495,7 +1505,7 @@ textarea {
 /* ---------- Footer ---------- */
 .footer {
   padding: 64px 0 44px;
-  background: var(--color-black);
+  background: var(--color-matte);
   color: var(--color-white);
 }
 
@@ -1557,6 +1567,10 @@ textarea {
   color: var(--accent);
 }
 
+.footer-brand:hover small {
+  color: var(--color-white);
+}
+
 .footer-social,
 .footer-top-link {
   display: inline-flex;
@@ -1594,7 +1608,7 @@ textarea {
   width: auto;
   min-width: 112px;
   gap: 9px;
-  padding: 0 18px;
+  padding: 4px 18px 0;
   border-radius: 4px;
   font-size: 0.72rem;
   font-weight: 800;
@@ -1604,14 +1618,20 @@ textarea {
 
 .footer-top-link:hover {
   color: var(--accent);
+  border-color: var(--accent);
 }
 
 .footer-top-link i {
   transition: transform 0.22s var(--ease);
+  transform: translateY(3px);
+}
+
+.footer-top-link span {
+  transform: translateY(3px);
 }
 
 .footer-top-link:hover i {
-  transform: translateY(-3px);
+  transform: translateY(0);
 }
 
 .footer-divider {
