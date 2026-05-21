@@ -763,14 +763,24 @@ textarea {
   padding-inline: max(24px, calc((100vw - var(--container)) / 2 + 24px));
 }
 
+.portfolio-window {
+  overflow: hidden;
+  padding: 4px 2px 18px;
+  width: 100%;
+}
+
 .portfolio-grid {
   display: flex;
   gap: 24px;
-  overflow-x: auto;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
+  overflow: visible;
   scrollbar-width: none;
-  padding: 4px 2px 18px;
+  padding: 0;
+  transform: translateX(0);
+  will-change: transform;
+}
+
+.portfolio-grid.is-moving {
+  transition: transform 0.58s var(--ease);
 }
 
 .portfolio-grid::-webkit-scrollbar {
@@ -779,13 +789,15 @@ textarea {
 
 .portfolio-arrow {
   position: absolute;
-  top: 4px;
-  bottom: 18px;
+  top: 50%;
+  bottom: auto;
+  transform: translateY(-50%);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 54px;
-  height: auto;
+  height: min(220px, calc(100% - 36px));
+  min-height: 128px;
   border-radius: 0;
   background: color-mix(in srgb, var(--bg-elev) 82%, transparent);
   border: 0;
@@ -883,17 +895,20 @@ textarea {
 .project-stack {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 7px;
   margin-top: 14px;
 }
 
 .project-stack span {
-  font-size: 0.75rem;
-  padding: 3px 10px;
-  background: var(--surface);
+  font-size: 0.72rem;
+  padding: 5px 11px;
+  background: color-mix(in srgb, var(--primary) 10%, var(--bg-elev));
   border-radius: 999px;
-  color: var(--text-soft);
-  border: 1px solid var(--border);
+  color: var(--primary);
+  border: 1px solid color-mix(in srgb, var(--primary) 24%, var(--border));
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.42);
+  font-weight: 800;
+  letter-spacing: 0.02em;
 }
 
 /* ---------- Credentials + Build ---------- */
@@ -1806,11 +1821,11 @@ textarea {
   }
 
   .section {
-    padding: 55px 0;
+    padding: 28px 0 46px;
   }
 
   .section-header {
-    margin-bottom: 40px;
+    margin-bottom: 24px;
   }
 
   .hero {
@@ -1896,8 +1911,10 @@ textarea {
   }
 
   .portfolio-arrow {
-    width: 44px;
-    height: auto;
+    width: 40px;
+    height: 132px;
+    min-height: 0;
+    opacity: 0.24;
   }
 
   .portfolio-arrow-prev {

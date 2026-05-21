@@ -96,7 +96,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let carouselTimer = null;
     let carouselMotionTimer = null;
     const CAROUSEL_DELAY = 2500;
-    const CAROUSEL_MOTION = 640;
+    const CAROUSEL_MOTION = 580;
+
+    const finishMotion = () => {
+      portfolioTrack.classList.remove('is-moving');
+      portfolioTrack.style.transform = 'translateX(0)';
+      carouselMoving = false;
+      carouselMotionTimer = null;
+    };
 
     const movePortfolio = () => {
       if (document.hidden) return;
@@ -106,30 +113,30 @@ document.addEventListener('DOMContentLoaded', () => {
       if (!step || !firstCard || carouselMoving) return;
 
       carouselMoving = true;
-      portfolioTrack.scrollBy({ left: step, behavior: 'smooth' });
+      portfolioTrack.classList.add('is-moving');
+      portfolioTrack.style.transform = `translateX(-${step}px)`;
 
       carouselMotionTimer = window.setTimeout(() => {
         portfolioTrack.appendChild(firstCard);
-        portfolioTrack.scrollLeft = Math.max(portfolioTrack.scrollLeft - step, 0);
-        carouselMoving = false;
-        carouselMotionTimer = null;
+        finishMotion();
       }, CAROUSEL_MOTION);
     };
 
     const startCarousel = () => {
+      if (document.hidden) return;
       if (!carouselTimer) carouselTimer = window.setInterval(movePortfolio, CAROUSEL_DELAY);
     };
 
     const stopCarousel = () => {
-      if (!carouselTimer) return;
-      window.clearInterval(carouselTimer);
-      carouselTimer = null;
+      if (carouselTimer) {
+        window.clearInterval(carouselTimer);
+        carouselTimer = null;
+      }
       if (carouselMotionTimer) {
         window.clearTimeout(carouselMotionTimer);
         carouselMotionTimer = null;
       }
-      portfolioTrack.scrollLeft = 0;
-      carouselMoving = false;
+      finishMotion();
     };
 
     portfolioPrev?.addEventListener('click', () => {
@@ -140,12 +147,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
       carouselMoving = true;
       portfolioTrack.insertBefore(lastCard, portfolioTrack.firstElementChild);
-      portfolioTrack.scrollLeft = portfolioTrack.scrollLeft + step;
+      portfolioTrack.classList.remove('is-moving');
+      portfolioTrack.style.transform = `translateX(-${step}px)`;
+      portfolioTrack.offsetWidth;
 
-      portfolioTrack.scrollBy({ left: -step, behavior: 'smooth' });
+      portfolioTrack.classList.add('is-moving');
+      portfolioTrack.style.transform = 'translateX(0)';
       carouselMotionTimer = window.setTimeout(() => {
-        carouselMoving = false;
-        carouselMotionTimer = null;
+        finishMotion();
       }, CAROUSEL_MOTION);
     });
 
@@ -161,6 +170,9 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     startCarousel();
+
+    window.addEventListener('blur', stopCarousel);
+    window.addEventListener('focus', startCarousel);
   }
 
   /* ---------- Hero: paired typewriter + showcase carousel ----------
