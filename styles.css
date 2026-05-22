@@ -245,11 +245,18 @@ textarea {
 
 .nav-link {
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
   font-size: 0.95rem;
   font-weight: 500;
   color: var(--text-muted);
   padding: 4px 2px 6px;
   transition: color 0.2s ease;
+}
+
+.nav-link i {
+  display: none;
 }
 
 .nav-link:hover,
@@ -498,7 +505,7 @@ textarea {
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: 30px;
-  padding: 18px;
+  padding: 18px 18px 12px;
   box-shadow: var(--shadow-lg);
   position: relative;
   z-index: 1;
@@ -552,7 +559,7 @@ textarea {
 }
 
 .skill-android {
-  color: var(--brand-android);
+  color: #3ddc84;
 }
 
 .skill-ios {
@@ -588,7 +595,7 @@ textarea {
 
 .showcase-meta {
   text-align: center;
-  padding: 8px 8px 6px;
+  padding: 7px 8px 0;
 }
 
 .showcase-label {
@@ -798,7 +805,7 @@ textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 54px;
+  width: 24px;
   height: min(220px, calc(100% - 36px));
   min-height: 128px;
   border-radius: 0;
@@ -827,7 +834,7 @@ textarea {
 }
 
 .project-card {
-  flex: 0 0 calc((100% - 48px) / 3);
+  flex: 0 0 calc((100% - 72px) / 4);
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
@@ -901,8 +908,9 @@ textarea {
 .project-stack {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
+  gap: 8px;
   margin-top: 14px;
+  align-items: center;
 }
 
 .project-stack span {
@@ -913,13 +921,19 @@ textarea {
   color: var(--color-navy);
   border: 0;
   box-shadow: none;
-  font-weight: 800;
+  font-weight: 900;
   letter-spacing: 0.02em;
 }
 
 .project-stack span:not(:last-child)::after {
-  content: ",";
-  color: var(--color-orange);
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  margin-left: 8px;
+  border-radius: 50%;
+  background: var(--color-matte);
+  transform: translateY(-1px);
 }
 
 /* ---------- Credentials + Build ---------- */
@@ -1627,10 +1641,12 @@ textarea {
 }
 
 .footer-top-link span {
+  transition: transform 0.22s var(--ease);
   transform: translateY(3px);
 }
 
-.footer-top-link:hover i {
+.footer-top-link:hover i,
+.footer-top-link:hover span {
   transform: translateY(0);
 }
 
@@ -1793,53 +1809,65 @@ textarea {
   }
 }
 
-@media (min-width: 1440px) {
-  .project-card {
-    flex-basis: calc((100% - 72px) / 4);
-  }
-}
-
-@media (min-width: 1680px) {
-  .project-card {
-    flex-basis: calc((100% - 96px) / 5);
-  }
-}
-
 @media (max-width: 760px) {
   .menu-toggle {
-    display: flex;
+    display: none;
   }
 
   .nav-links {
-    position: fixed;
-    top: var(--nav-h);
-    right: 0;
-    bottom: 0;
-    width: min(78vw, 320px);
-    flex-direction: column;
-    align-items: flex-start;
-    background: var(--bg-elev);
-    border-left: 1px solid var(--border);
-    padding: 36px 28px;
-    gap: 22px;
-    transform: translateX(100%);
-    transition: transform 0.35s var(--ease);
-    box-shadow: var(--shadow-lg);
-    z-index: 99;
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
+    position: static;
+    width: auto;
+    gap: 10px;
+    transform: none;
+    background: transparent;
+    border-left: 0;
+    padding: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
   }
 
   .nav-links.open {
-    transform: translateX(0);
+    transform: none;
   }
 
   .nav-link {
-    font-size: 1.05rem;
+    width: 42px;
+    height: 42px;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: var(--bg-elev);
+    color: var(--primary);
+    box-shadow: var(--shadow-sm);
+  }
+
+  .nav-home,
+  .nav-cv {
+    display: none;
+  }
+
+  .nav-link span {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+  }
+
+  .nav-link i {
+    display: block;
+    font-size: 1rem;
+  }
+
+  .nav-link.active {
+    border-color: var(--accent);
+    color: var(--accent);
   }
 
   .nav-link.active::after {
-    bottom: -4px;
+    display: none;
   }
 
   .section {
@@ -1867,10 +1895,11 @@ textarea {
   }
 
   .showcase-card {
-    min-height: 320px;
+    min-height: 292px;
     display: flex;
     flex-direction: column;
     justify-content: center;
+    padding-bottom: 10px;
   }
 
   .hero-cta {
@@ -1915,6 +1944,24 @@ textarea {
     flex-basis: 100%;
   }
 
+  .credential-stats {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .credential-stat {
+    min-height: 126px;
+    padding: 20px 16px;
+  }
+
+  .credential-stat strong {
+    font-size: clamp(1.65rem, 8vw, 2.35rem);
+  }
+
+  .credential-stat span {
+    font-size: 0.62rem;
+    letter-spacing: 0.08em;
+  }
+
   .cv-column {
     padding: 24px;
   }
@@ -1933,7 +1980,7 @@ textarea {
   }
 
   .portfolio-arrow {
-    width: 40px;
+    width: 24px;
     height: 132px;
     min-height: 0;
     opacity: 0.24;
@@ -1977,19 +2024,52 @@ textarea {
   }
 
   .footer {
-    padding: 52px 0 36px;
+    padding: 38px 0 32px;
   }
 
   .footer-top {
-    grid-template-columns: 1fr;
-    justify-items: center;
-    text-align: center;
+    grid-template-columns: 1fr auto;
+    grid-template-areas:
+      "top top"
+      "brand links";
+    justify-items: stretch;
+    align-items: start;
+    gap: 22px 24px;
+    text-align: left;
   }
 
-  .footer-brand,
+  .footer-brand {
+    grid-area: brand;
+    align-items: flex-start;
+    justify-self: start;
+  }
+
+  .footer-column {
+    grid-area: links;
+    justify-items: end;
+    text-align: right;
+  }
+
   .footer-column a {
-    align-items: center;
-    justify-self: center;
+    justify-self: end;
+  }
+
+  .footer-top-link {
+    grid-area: top;
+    justify-self: end;
+    min-width: 96px;
+    height: 42px;
+    padding: 3px 12px 0;
+    font-size: 0.64rem;
+  }
+
+  .footer-brand span {
+    font-size: 0.92rem;
+  }
+
+  .footer-brand small,
+  .footer-column a {
+    font-size: 0.64rem;
   }
 }
 
@@ -2014,11 +2094,6 @@ textarea {
     font-size: 6rem;
     border-radius: 24px;
   }
-
-  .credential-stats {
-    grid-template-columns: 1fr;
-  }
-
   .credentials-actions {
     align-items: stretch;
     flex-direction: column;
