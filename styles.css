@@ -8,7 +8,7 @@
 :root {
   --color-sky: #219ebc;
   --color-navy: #023047;
-  --color-yellow: #ffd60a;
+  --color-yellow: #FF0002;
   --color-orange: #fb8500;
   --color-white: #ffffff;
   --color-matte: #18181b;
@@ -831,6 +831,7 @@ textarea {
   width: 100vw;
   margin-left: calc(50% - 50vw);
   padding-inline: var(--portfolio-edge);
+  overflow-x: clip;
 }
 
 .portfolio-window {
@@ -842,7 +843,7 @@ textarea {
 .portfolio-grid {
   display: flex;
   gap: 24px;
-  overflow: visible;
+  overflow: hidden;
   scrollbar-width: none;
   padding: 0;
   transform: translateX(0);
@@ -1792,12 +1793,12 @@ textarea {
 /* ---------- Responsive ---------- */
 @media (min-width: 761px) and (max-width: 1536px) {
   :root {
-    --container: 1020px;
+    --container: 1220px;
     --nav-h: 72px;
   }
 
   .container {
-    padding-inline: 36px;
+    padding-inline: 32px;
   }
 
   .logo {
@@ -1868,6 +1869,12 @@ textarea {
 
   .showcase-brand {
     font-size: 1.08rem;
+  }
+
+  .portfolio-carousel {
+    --portfolio-edge: 32px;
+    width: 100%;
+    margin-left: 0;
   }
 }
 
