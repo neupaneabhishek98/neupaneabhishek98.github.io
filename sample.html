@@ -1,0 +1,294 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600&family=Manrope:wght@300;400;500;600;700&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --bg:#F0F0EE;--bg2:#E8E8E5;--wh:#fff;
+  --navy:#0F2A4A;--navy3:#234E7A;
+  --or:#F97316;--body:#2C2C2C;--muted:#7A7A7A;
+  --bd:#E0DDD8;--bd2:#D0CCC5;
+  --sora:'Sora',sans-serif;--man:'Manrope',sans-serif;
+}
+body{background:var(--bg);color:var(--body);font-family:var(--man);-webkit-font-smoothing:antialiased;font-size:15px;}
+.wrap{padding:0 0 32px;}
+
+/* NAV */
+.nav{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;background:rgba(240,240,238,.95);border-bottom:1px solid var(--bd);margin-bottom:0;}
+.nav-logo{font-family:var(--sora);font-size:1rem;font-weight:600;color:var(--navy);}
+.nav-logo span{color:var(--or);}
+.nav-links{display:flex;gap:1.5rem;list-style:none;align-items:center;}
+.nav-links a{font-size:.76rem;font-weight:500;letter-spacing:.04em;color:var(--muted);}
+.nav-cta{background:var(--navy);color:#fff!important;padding:.45rem 1.1rem;border-radius:100px;font-size:.74rem!important;}
+
+/* HERO */
+.hero{padding:52px 28px 48px;background:var(--bg);border-bottom:1px solid var(--bd);position:relative;overflow:hidden;}
+.hero-blob{position:absolute;right:-40px;top:10%;width:280px;height:280px;background:var(--wh);border-radius:50%;opacity:.5;pointer-events:none;}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--man);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--or);margin-bottom:16px;}
+.eyebrow::before{content:'';width:20px;height:2px;background:var(--or);}
+.hero-name{font-family:var(--sora);font-size:clamp(2.2rem,5vw,3.6rem);font-weight:600;line-height:1.05;letter-spacing:-.03em;color:var(--navy);}
+.hero-name .l2{color:var(--navy3);font-weight:300;}
+.hero-desc{margin-top:16px;font-size:.95rem;font-weight:300;color:var(--muted);line-height:1.8;max-width:440px;}
+.hero-desc strong{color:var(--body);font-weight:500;}
+.hero-roles{display:flex;gap:.6rem;flex-wrap:wrap;margin-top:14px;}
+.role-pill{font-family:var(--man);font-size:.7rem;font-weight:500;color:var(--navy);background:var(--wh);border:1px solid var(--bd2);padding:.35rem .9rem;border-radius:100px;}
+.hero-cta{display:flex;gap:.75rem;flex-wrap:wrap;margin-top:22px;}
+.btn-fill{display:inline-flex;align-items:center;padding:.75rem 1.6rem;background:var(--navy);color:#fff;font-family:var(--man);font-size:.78rem;font-weight:600;letter-spacing:.03em;border-radius:100px;border:2px solid var(--navy);cursor:pointer;}
+.btn-outline{display:inline-flex;align-items:center;padding:.75rem 1.6rem;background:transparent;color:var(--navy);font-family:var(--man);font-size:.78rem;font-weight:600;letter-spacing:.03em;border-radius:100px;border:2px solid var(--navy);cursor:pointer;}
+.stat-strip{display:flex;gap:2.5rem;margin-top:36px;padding-top:24px;border-top:1px solid var(--bd);flex-wrap:wrap;}
+.stat-n{font-family:var(--sora);font-size:1.9rem;font-weight:600;color:var(--navy);line-height:1;}
+.stat-l{font-size:.7rem;font-weight:500;color:var(--muted);margin-top:.2rem;letter-spacing:.04em;}
+
+/* SECTION */
+.sec{padding:44px 28px;border-bottom:1px solid var(--bd);}
+.sec-bg{background:var(--wh);}
+.sec-label{font-family:var(--man);font-size:.68rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--or);margin-bottom:.5rem;}
+.sec-title{font-family:var(--sora);font-size:clamp(1.5rem,3vw,2.2rem);font-weight:600;line-height:1.15;color:var(--navy);letter-spacing:-.02em;margin-bottom:24px;}
+.sec-title span{color:var(--navy3);font-weight:300;}
+
+/* ABOUT */
+.about-grid{display:grid;grid-template-columns:1fr 1.5fr;gap:3rem;align-items:start;}
+.role-items{display:flex;flex-direction:column;gap:.6rem;margin-bottom:20px;}
+.role-item{display:flex;align-items:center;gap:.6rem;font-size:.84rem;font-weight:500;color:var(--navy);}
+.role-dot{width:7px;height:7px;background:var(--or);border-radius:50%;flex-shrink:0;}
+.about-body{font-size:.88rem;font-weight:300;color:var(--muted);line-height:1.8;margin-bottom:16px;}
+.about-body strong{color:var(--body);font-weight:500;}
+.skills-label{font-size:.66rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;}
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(108px,1fr));gap:6px;}
+.sk{background:var(--bg);border:1px solid var(--bd);padding:.5rem .85rem;border-radius:8px;font-family:var(--man);font-size:.72rem;font-weight:500;color:var(--body);display:flex;align-items:center;gap:.45rem;}
+.sk img{width:14px;height:14px;object-fit:contain;flex-shrink:0;}
+.sk-let{width:14px;height:14px;border-radius:3px;background:var(--navy);color:#fff;font-size:.55rem;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+
+/* PORTFOLIO */
+.port-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px;}
+.pc{background:var(--wh);border:1px solid var(--bd);border-radius:14px;padding:1.5rem;}
+.pc-logo{width:52px;height:52px;border-radius:50%;background:var(--bg);border:1px solid var(--bd);display:flex;align-items:center;justify-content:center;margin-bottom:14px;}
+.pc-logo-ph{width:28px;height:28px;border-radius:50%;background:var(--bg2);}
+.pc-type{font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--or);margin-bottom:.3rem;}
+.pc-name{font-family:var(--sora);font-size:1rem;font-weight:600;color:var(--navy);margin-bottom:.5rem;letter-spacing:-.01em;}
+.pc-desc{font-size:.8rem;font-weight:400;color:var(--muted);line-height:1.6;margin-bottom:12px;}
+.pc-tags{display:flex;gap:.4rem;flex-wrap:wrap;}
+.pc-tag{font-size:.64rem;font-weight:600;background:var(--bg);border:1px solid var(--bd);color:var(--body);padding:.25rem .6rem;border-radius:100px;}
+.pc-foot{display:flex;align-items:center;justify-content:space-between;margin-top:14px;padding-top:12px;border-top:1px solid var(--bd);}
+.pc-status{font-size:.68rem;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);}
+.pc-link{display:inline-flex;align-items:center;gap:.35rem;font-size:.73rem;font-weight:600;color:var(--navy);}
+.pc-link svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;}
+
+/* RESUME */
+.resume-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+.resume-desc{font-size:.88rem;font-weight:300;color:var(--muted);line-height:1.8;margin-bottom:20px;}
+.resume-btns{display:flex;flex-direction:column;gap:10px;align-items:flex-start;}
+.btn-r{display:inline-flex;align-items:center;gap:.65rem;padding:.8rem 1.6rem;font-family:var(--man);font-size:.76rem;font-weight:600;letter-spacing:.03em;border-radius:10px;cursor:pointer;}
+.btn-r svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;}
+.btn-r-cv{background:var(--bg);border:1.5px solid var(--bd2);color:var(--navy);}
+.btn-r-docs{background:var(--navy);color:#fff;border:1.5px solid var(--navy);text-decoration:none;}
+.res-cards{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.res-c{background:var(--bg);border:1px solid var(--bd);border-radius:12px;padding:1.25rem 1rem;}
+.res-n{font-family:var(--sora);font-size:2.2rem;font-weight:600;color:var(--navy);line-height:1;margin-bottom:.3rem;}
+.res-l{font-size:.68rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);}
+
+/* CONTACT */
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start;}
+.cdesc{font-size:.88rem;font-weight:300;color:var(--muted);line-height:1.8;margin-bottom:18px;}
+.clinks{display:flex;flex-direction:column;}
+.clink{display:flex;align-items:center;gap:.85rem;font-size:.8rem;font-weight:500;color:var(--body);border-bottom:1px solid var(--bd);padding:12px 0;}
+.clink:last-child{border-bottom:none;}
+.clink-lbl{font-size:.6rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);width:60px;flex-shrink:0;}
+.cform{display:flex;flex-direction:column;gap:10px;}
+.cf{background:var(--wh);border:1.5px solid var(--bd);border-radius:9px;padding:.75rem 1rem;color:var(--body);font-family:var(--man);font-size:.85rem;width:100%;outline:none;}
+.cf::placeholder{color:#bbb;}
+textarea.cf{resize:none;height:100px;}
+
+/* FOOTER */
+.foot{background:var(--navy);color:rgba(255,255,255,.5);padding:20px 28px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px;}
+.foot-logo{font-family:var(--sora);font-size:.95rem;font-weight:600;color:#fff;}
+.foot-logo span{color:var(--or);}
+.foot-c{font-size:.72rem;}
+.foot-t{font-size:.72rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.45);background:none;border:none;cursor:pointer;}
+
+@media(max-width:560px){
+  .about-grid,.resume-grid,.contact-grid{grid-template-columns:1fr;gap:2rem;}
+}
+</style>
+
+<div class="wrap">
+  <!-- NAV -->
+  <nav class="nav">
+    <span class="nav-logo">A<span>.</span>Neupane</span>
+    <ul class="nav-links">
+      <li><a href="#">About</a></li>
+      <li><a href="#">Portfolio</a></li>
+      <li><a href="#">Resume</a></li>
+      <li><a href="#" class="nav-cta">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-blob"></div>
+    <div class="eyebrow">Based in Kathmandu, Nepal</div>
+    <h1 class="hero-name">Abhishek<br><span class="l2">Neupane</span></h1>
+    <p class="hero-desc"><strong>Software Engineer.</strong> Entrepreneur. Lecturer.<br>I build thoughtful, scalable products — from backend architecture to polished interfaces.</p>
+    <div class="hero-roles">
+      <span class="role-pill">Full Stack Engineer</span>
+      <span class="role-pill">Entrepreneur</span>
+      <span class="role-pill">Lecturer</span>
+    </div>
+    <div class="hero-cta">
+      <button class="btn-fill">Get In Touch</button>
+      <button class="btn-outline">Portfolio</button>
+    </div>
+    <div class="stat-strip">
+      <div><div class="stat-n">3+</div><div class="stat-l">Years Experience</div></div>
+      <div><div class="stat-n">20+</div><div class="stat-l">Projects Delivered</div></div>
+      <div><div class="stat-n">3</div><div class="stat-l">Roles Held</div></div>
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="sec sec-bg">
+    <p class="sec-label">About Me</p>
+    <div class="about-grid">
+      <div>
+        <h2 class="sec-title">Engineer.<br><span>Human. Builder.</span></h2>
+        <div class="role-items">
+          <div class="role-item"><span class="role-dot"></span>Software Engineer</div>
+          <div class="role-item"><span class="role-dot"></span>Entrepreneur</div>
+          <div class="role-item"><span class="role-dot"></span>Lecturer</div>
+        </div>
+      </div>
+      <div>
+        <div class="about-body">
+          <p>I'm a <strong>full-stack software engineer</strong> from Kathmandu, Nepal. I care about writing clean, purposeful code and building products that genuinely help people.</p>
+          <p style="margin-top:10px;">Outside of engineering, I run my own venture and teach as a lecturer — the best technologists are also curious thinkers and clear communicators.</p>
+        </div>
+        <p class="skills-label">Technologies I work with</p>
+        <div class="skills-grid">
+          <span class="sk"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/laravel/laravel-original.svg" alt=""/>Laravel</span>
+          <span class="sk"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" alt=""/>React</span>
+          <span class="sk"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" alt=""/>Node.js</span>
+          <span class="sk"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/php/php-original.svg" alt=""/>PHP</span>
+          <span class="sk"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt=""/>Python</span>
+          <span class="sk"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt=""/>JavaScript</span>
+          <span class="sk"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg" alt=""/>MySQL</span>
+          <span class="sk"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg" alt=""/>Docker</span>
+          <span class="sk"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt=""/>Git</span>
+          <span class="sk"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg" alt=""/>Linux</span>
+          <span class="sk"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg" alt=""/>C / C++</span>
+          <span class="sk"><span class="sk-let">API</span>REST APIs</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- PORTFOLIO -->
+  <div class="sec">
+    <p class="sec-label">Portfolio</p>
+    <h2 class="sec-title">Things I've <span>built</span></h2>
+    <div class="port-grid">
+      <div class="pc">
+        <div class="pc-logo"><div class="pc-logo-ph"></div></div>
+        <p class="pc-type">Web App</p>
+        <h3 class="pc-name">Project Name</h3>
+        <p class="pc-desc">A brief description of what this project does, the problem it solves, and who it's for.</p>
+        <div class="pc-tags"><span class="pc-tag">Laravel</span><span class="pc-tag">React</span><span class="pc-tag">MySQL</span></div>
+        <div class="pc-foot">
+          <span class="pc-status">In Production</span>
+          <a class="pc-link" href="#">View Project <svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+        </div>
+      </div>
+      <div class="pc">
+        <div class="pc-logo"><div class="pc-logo-ph"></div></div>
+        <p class="pc-type">Website</p>
+        <h3 class="pc-name">Project Name</h3>
+        <p class="pc-desc">Short description of the project, what it solves, and what makes it stand out technically.</p>
+        <div class="pc-tags"><span class="pc-tag">PHP</span><span class="pc-tag">Node.js</span><span class="pc-tag">JS</span></div>
+        <div class="pc-foot">
+          <span class="pc-status">Completed</span>
+          <a class="pc-link" href="#">View Project <svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+        </div>
+      </div>
+      <div class="pc">
+        <div class="pc-logo"><div class="pc-logo-ph"></div></div>
+        <p class="pc-type">Mobile App</p>
+        <h3 class="pc-name">Project Name</h3>
+        <p class="pc-desc">Describe what the app does and the core user experience. Mention the tech stack.</p>
+        <div class="pc-tags"><span class="pc-tag">Python</span><span class="pc-tag">REST API</span><span class="pc-tag">React</span></div>
+        <div class="pc-foot">
+          <span class="pc-status">In Progress</span>
+          <a class="pc-link" href="#">View Project <svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+        </div>
+      </div>
+      <div class="pc">
+        <div class="pc-logo"><div class="pc-logo-ph"></div></div>
+        <p class="pc-type">SaaS / Platform</p>
+        <h3 class="pc-name">Project Name</h3>
+        <p class="pc-desc">A platform built for a specific audience. Outline the core value and engineering decisions.</p>
+        <div class="pc-tags"><span class="pc-tag">Laravel</span><span class="pc-tag">Docker</span><span class="pc-tag">MySQL</span></div>
+        <div class="pc-foot">
+          <span class="pc-status">Live</span>
+          <a class="pc-link" href="#">View Project <svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESUME -->
+  <div class="sec sec-bg">
+    <p class="sec-label">Resume</p>
+    <div class="resume-grid">
+      <div>
+        <h2 class="sec-title">Credentials &amp;<br><span>Documents</span></h2>
+        <p class="resume-desc">My CV covers professional experience, academic background, and key projects. Certified originals are available for formal review.</p>
+        <div class="resume-btns">
+          <button class="btn-r btn-r-cv">
+            <svg viewBox="0 0 24 24"><path d="M12 16V4m0 12-4-4m4 4 4-4M4 20h16"/></svg>
+            See CV
+          </button>
+          <a class="btn-r btn-r-docs" href="https://neupaneabhishek98.github.io/Portfolio/documents.html" target="_blank">
+            <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            Original Documents
+          </a>
+        </div>
+      </div>
+      <div class="res-cards">
+        <div class="res-c"><div class="res-n">3+</div><div class="res-l">Years Experience</div></div>
+        <div class="res-c"><div class="res-n">20+</div><div class="res-l">Projects</div></div>
+        <div class="res-c"><div class="res-n">3</div><div class="res-l">Roles Held</div></div>
+        <div class="res-c"><div class="res-n">∞</div><div class="res-l">Lines Written</div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- CONTACT -->
+  <div class="sec">
+    <p class="sec-label">Contact</p>
+    <div class="contact-grid">
+      <div>
+        <h2 class="sec-title">Let's build<br><span>something together</span></h2>
+        <p class="cdesc">Whether it's a project, a teaching opportunity, or just a good conversation — feel free to reach out.</p>
+        <div class="clinks">
+          <a class="clink" href="#"><span class="clink-lbl">Email</span>your@email.com</a>
+          <a class="clink" href="#"><span class="clink-lbl">GitHub</span>github.com/neupaneabhishek98</a>
+          <a class="clink" href="#"><span class="clink-lbl">LinkedIn</span>linkedin.com/in/your-profile</a>
+          <a class="clink" href="#"><span class="clink-lbl">Portfolio</span>neupaneabhishek98.github.io</a>
+        </div>
+      </div>
+      <div>
+        <div class="cform">
+          <input class="cf" type="text" placeholder="Your Name"/>
+          <input class="cf" type="email" placeholder="Your Email"/>
+          <input class="cf" type="text" placeholder="Subject"/>
+          <textarea class="cf" placeholder="Your message…"></textarea>
+          <button class="btn-fill">Send Message</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="foot">
+    <span class="foot-logo">A<span>.</span>Neupane</span>
+    <span class="foot-c">© 2025 Abhishek Neupane · Kathmandu, Nepal</span>
+    <button class="foot-t">Back to top ↑</button>
+  </div>
+</div>

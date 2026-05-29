@@ -1790,6 +1790,87 @@ textarea {
 }
 
 /* ---------- Responsive ---------- */
+@media (min-width: 761px) and (max-width: 1536px) {
+  :root {
+    --container: 1020px;
+    --nav-h: 72px;
+  }
+
+  .container {
+    padding-inline: 36px;
+  }
+
+  .logo {
+    font-size: 1rem;
+  }
+
+  .nav-links {
+    gap: 24px;
+  }
+
+  .nav-link {
+    font-size: 0.84rem;
+  }
+
+  .hero {
+    min-height: auto;
+    padding: calc(var(--nav-h) + 30px) 0 70px;
+  }
+
+  .hero-content {
+    grid-template-columns: minmax(0, 1.04fr) minmax(260px, 0.76fr);
+    gap: 42px;
+  }
+
+  .hero-eyebrow {
+    font-size: 0.78rem;
+    margin-bottom: 18px;
+  }
+
+  .hero-title {
+    font-size: clamp(2.35rem, 4.2vw, 3.35rem);
+    margin-bottom: 18px;
+  }
+
+  .hero-line-2 {
+    font-size: clamp(1.45rem, 2.55vw, 2rem);
+  }
+
+  .hero-subtitle {
+    max-width: 520px;
+    font-size: 0.96rem;
+    line-height: 1.7;
+    margin-bottom: 28px;
+  }
+
+  .btn {
+    padding: 12px 22px;
+    font-size: 0.86rem;
+  }
+
+  .showcase-wrapper {
+    width: min(270px, 100%);
+    margin-right: 0;
+  }
+
+  .showcase-card {
+    border-radius: 24px;
+    padding: 14px 14px 10px;
+  }
+
+  .showcase-frame {
+    border-radius: 18px;
+  }
+
+  .showcase-skill-icon {
+    font-size: clamp(4rem, 8vw, 5.5rem);
+  }
+
+  .showcase-brand {
+    font-size: 1.08rem;
+  }
+}
+
 @media (max-width: 1100px) {
   .hero-content {
     grid-template-columns: 1fr;
