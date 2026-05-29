@@ -908,7 +908,7 @@ textarea {
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  transition: border-color 0.3s var(--ease);
+  transition: box-shadow 0.3s var(--ease);
   display: flex;
   flex-direction: column;
   scroll-snap-align: start;
@@ -917,8 +917,8 @@ textarea {
 }
 
 .project-card:hover {
-  box-shadow: none;
-  border-color: var(--color-navy);
+  box-shadow: 0 16px 34px color-mix(in srgb, var(--accent) 24%, transparent);
+  border-color: var(--border);
 }
 
 .project-thumb {
@@ -940,7 +940,7 @@ textarea {
 }
 
 .project-ordash .project-thumb {
-  background: var(--color-navy);
+  background: #040517;
 }
 
 .project-logo {
@@ -963,6 +963,12 @@ textarea {
   font-size: 1.25rem;
   font-weight: 700;
   margin-bottom: 8px;
+  white-space: nowrap;
+  line-height: 1.15;
+}
+
+.project-card .project-title-long {
+  font-size: clamp(0.98rem, 1.25vw, 1.08rem);
 }
 
 .project-card p {
@@ -987,12 +993,24 @@ textarea {
   padding: 0;
   background: transparent;
   border-radius: 0;
-  color: var(--color-navy);
+  color: var(--gray-800);
   border: 0;
   box-shadow: none;
   font-weight: 900;
   letter-spacing: 0.02em;
-  transition: color 0.2s ease, text-shadow 0.2s ease;
+  transition: color 0.28s ease, text-shadow 0.28s ease;
+}
+
+.project-stack span:nth-child(1) {
+  transition-delay: 0s;
+}
+
+.project-stack span:nth-child(2) {
+  transition-delay: 0.08s;
+}
+
+.project-stack span:nth-child(3) {
+  transition-delay: 0.16s;
 }
 
 .project-stack span:not(:last-child)::after {
@@ -1002,7 +1020,7 @@ textarea {
   height: 5px;
   margin-left: 8px;
   border-radius: 50%;
-  background: var(--color-matte);
+  background: var(--color-navy);
   transform: translateY(-1px);
   transition: background 0.2s ease, box-shadow 0.2s ease;
 }
@@ -1013,8 +1031,8 @@ textarea {
 }
 
 .project-card:hover .project-stack span:not(:last-child)::after {
-  background: var(--accent);
-  box-shadow: 0 0 10px color-mix(in srgb, var(--accent) 70%, transparent);
+  background: var(--color-navy);
+  box-shadow: none;
 }
 
 /* ---------- Credentials + Build ---------- */
@@ -1120,15 +1138,20 @@ textarea {
 
 .build-copy,
 .build .contact-form {
-  padding: 34px;
+  padding: 26px 32px;
   background: var(--bg-elev);
   border: 1px solid var(--border);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow);
-  min-height: 100%;
+  height: 100%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+}
+
+.build .contact-form .form-heading .section-title {
+  font-size: clamp(1.9rem, 3.2vw, 2.55rem);
+  line-height: 1.05;
 }
 
 .build-link {
@@ -1229,7 +1252,11 @@ textarea {
 }
 
 .build-form {
-  min-height: 100%;
+  min-height: 0;
+}
+
+.build-form .btn-block {
+  margin-top: auto;
 }
 
 /* ---------- CV ---------- */
@@ -1627,13 +1654,13 @@ textarea {
   grid-template-columns: minmax(0, 1fr) 34px;
   align-items: center;
   gap: 10px;
-  min-height: 40px;
-  padding: 8px 8px 8px 12px;
+  min-height: 46px;
+  padding: 7px 8px 7px 16px;
   background: var(--bg-soft);
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius);
   color: var(--text-soft);
-  font-size: 0.82rem;
+  font-size: 0.95rem;
   font-weight: 750;
 }
 
@@ -1644,14 +1671,14 @@ textarea {
   width: 30px;
   height: 30px;
   border-radius: 8px;
-  color: var(--danger);
-  background: color-mix(in srgb, var(--danger) 10%, transparent);
+  color: var(--text-muted);
+  background: transparent;
   transition: background 0.2s ease, color 0.2s ease;
 }
 
 .selected-project-remove:hover {
-  color: var(--color-white);
-  background: var(--danger);
+  color: var(--danger);
+  background: color-mix(in srgb, var(--danger) 14%, transparent);
 }
 
 .selected-projects.invalid {
@@ -1661,10 +1688,14 @@ textarea {
 }
 
 .form-status {
-  margin-top: 14px;
+  margin-top: 10px;
   font-size: 0.9rem;
   text-align: center;
-  min-height: 22px;
+  min-height: 0;
+}
+
+.form-status:empty {
+  display: none;
 }
 
 .form-status.success {
