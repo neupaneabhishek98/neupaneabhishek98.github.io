@@ -870,15 +870,19 @@ textarea {
 }
 
 .portfolio-window {
-  overflow: hidden;
+  overflow-x: auto;
+  overflow-y: hidden;
   padding: 4px 2px 18px;
   width: 100%;
+  scrollbar-width: none;
+  scroll-behavior: smooth;
+  scroll-snap-type: x mandatory;
 }
 
 .portfolio-grid {
   display: flex;
   gap: 24px;
-  overflow: hidden;
+  overflow: visible;
   scrollbar-width: none;
   padding: 0;
   transform: translateX(0);
@@ -951,7 +955,7 @@ textarea {
 }
 
 .project-card:hover {
-  box-shadow: 0 16px 34px color-mix(in srgb, var(--accent) 24%, transparent);
+  box-shadow: none;
   border-color: var(--border);
 }
 
@@ -991,6 +995,11 @@ textarea {
   flex-direction: column;
   justify-content: space-between;
   min-height: 124px;
+  transition: background 0.42s ease-in-out;
+}
+
+.project-card:hover .project-body {
+  background: color-mix(in srgb, var(--bg-elev) 88%, var(--color-matte));
 }
 
 .project-card h3 {
@@ -1032,7 +1041,7 @@ textarea {
   box-shadow: none;
   font-weight: 900;
   letter-spacing: 0.02em;
-  transition: color 0.28s ease, text-shadow 0.28s ease;
+  transition: color 0.62s ease-in-out;
 }
 
 .project-stack span:nth-child(1) {
@@ -1040,11 +1049,11 @@ textarea {
 }
 
 .project-stack span:nth-child(2) {
-  transition-delay: 0.08s;
+  transition-delay: 0.16s;
 }
 
 .project-stack span:nth-child(3) {
-  transition-delay: 0.16s;
+  transition-delay: 0.32s;
 }
 
 .project-stack span:not(:last-child)::after {
@@ -1061,7 +1070,6 @@ textarea {
 
 .project-card:hover .project-stack span {
   color: var(--accent);
-  text-shadow: 0 0 14px color-mix(in srgb, var(--accent) 55%, transparent);
 }
 
 .project-card:hover .project-stack span:not(:last-child)::after {
@@ -1805,11 +1813,11 @@ textarea {
 
 .footer-brand:hover,
 .footer-column a:hover {
-  color: var(--accent);
+  color: var(--color-white);
 }
 
 .footer-brand:hover small {
-  color: color-mix(in srgb, var(--accent) 70%, var(--color-white));
+  color: var(--color-white);
 }
 
 .footer-social,
@@ -1821,8 +1829,8 @@ textarea {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  border: 1px solid var(--accent);
-  color: var(--accent);
+  border: 1px solid var(--color-white);
+  color: var(--color-white);
   transition: transform 0.22s var(--ease), background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
 }
 
@@ -1858,7 +1866,7 @@ textarea {
 }
 
 .footer-top-link:hover {
-  color: rgba(255, 255, 255, 0.86);
+  color: var(--color-white);
   border-color: var(--color-white);
 }
 
@@ -2187,6 +2195,10 @@ textarea {
 }
 
 @media (max-width: 760px) {
+  body {
+    font-size: 0.92rem;
+  }
+
   .menu-toggle {
     display: none;
   }
@@ -2253,6 +2265,11 @@ textarea {
 
   .section-header {
     margin-bottom: 24px;
+  }
+
+  .section-title {
+    font-size: clamp(1.65rem, 8vw, 2.25rem);
+    line-height: 1.14;
   }
 
   .hero {
@@ -2326,17 +2343,23 @@ textarea {
   }
 
   .credential-stat {
-    min-height: 126px;
-    padding: 20px 16px;
+    min-height: 122px;
+    padding: 18px 14px;
   }
 
   .credential-stat strong {
-    font-size: clamp(1.65rem, 8vw, 2.35rem);
+    font-size: clamp(1.5rem, 7vw, 2rem);
+  }
+
+  .credential-stat:nth-child(4) strong {
+    font-size: clamp(1.18rem, 5.35vw, 1.55rem);
   }
 
   .credential-stat span {
-    font-size: 0.62rem;
-    letter-spacing: 0.08em;
+    font-size: 0.54rem;
+    line-height: 1.45;
+    letter-spacing: 0.07em;
+    overflow-wrap: anywhere;
   }
 
   .cv-column {
@@ -2383,7 +2406,7 @@ textarea {
     --portfolio-edge: 36px;
     width: 100%;
     margin-left: 0;
-    overflow-x: hidden;
+    overflow-x: visible;
   }
 
   .portfolio-arrow-prev {
@@ -2394,33 +2417,47 @@ textarea {
     right: max(6px, calc(var(--portfolio-edge) - var(--portfolio-arrow-width) - var(--portfolio-arrow-gap)));
   }
 
+  .build-links {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 14px 12px;
+  }
+
   .build-link {
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 16px 0;
+    padding: 14px 0;
+    border-bottom: 0;
     text-align: center;
   }
 
-  .build-link span,
+  .build-link span {
+    display: none;
+  }
+
   .build-link strong {
     width: 100%;
     text-align: center;
+    font-size: 0.72rem;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
   }
 
   .build-link i {
-    width: 48px;
-    height: 48px;
+    width: 42px;
+    height: 42px;
+    font-size: 1rem;
   }
 
   .build-whatsapp i,
   .build-github i,
   .build-instagram i {
-    width: 54px;
-    height: 54px;
-    font-size: 1.42rem;
+    width: 46px;
+    height: 46px;
+    font-size: 1.16rem;
   }
 
   .selected-project {

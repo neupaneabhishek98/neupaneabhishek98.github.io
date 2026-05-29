@@ -109,6 +109,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   /* ---------- Selected work carousel ---------- */
   const portfolioCarousel = document.querySelector('.portfolio-carousel');
+  const portfolioWindow = document.querySelector('.portfolio-window');
   const portfolioTrack = document.getElementById('portfolioTrack');
   const portfolioPrev = document.querySelector('.portfolio-arrow-prev');
   const portfolioNext = document.querySelector('.portfolio-arrow-next');
@@ -213,10 +214,17 @@ document.addEventListener('DOMContentLoaded', () => {
       startCarousel();
     });
 
-    portfolioCarousel?.addEventListener('wheel', () => {
+    portfolioCarousel?.addEventListener('wheel', (event) => {
       carouselPaused = true;
       stopCarousel();
-    }, { passive: true });
+
+      if (!portfolioWindow) return;
+      const scrollAmount = Math.abs(event.deltaX) > Math.abs(event.deltaY)
+        ? event.deltaX
+        : event.deltaY;
+      portfolioWindow.scrollLeft += scrollAmount;
+      event.preventDefault();
+    }, { passive: false });
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
