@@ -233,15 +233,20 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('focus', startCarousel);
   }
 
-  /* ---------- Hero: static paired skill text + showcase icon ---------- */
+  /* ---------- Hero: paired typewriter + showcase carousel ----------
+     Each item pairs a typed phrase with a skill shown in the side card.
+     Slides advance every 2.5s with the typed phrase + brand staying in sync.
+  ---------------------------------------------------------------- */
   const buildItems = [
-    { label: 'PC softwares', slide: 4 },
-    { label: 'Marketing Tools', slide: 6 },
-    { label: 'Android Apps', slide: 1 },
-    { label: 'Modern Websites', slide: 5 },
-    { label: 'Graphic Designs', slide: 7 },
-    { label: 'Web Applications', slide: 2 },
-    { label: 'iOS Apps', slide: 3 },
+    { phrase: 'Practical Apps', brand: 'Android Apps', slide: 1 },
+    { phrase: 'Useful Products', brand: 'Web Applications', slide: 2 },
+    { phrase: 'Clean Interfaces', brand: 'iOS Apps', slide: 3 },
+    { phrase: 'PC Softwares', brand: 'PC Softwares', slide: 4 },
+    { phrase: 'Websites', brand: 'Websites', slide: 5 },
+    { phrase: 'Digital Marketing', brand: 'Digital Marketing', slide: 6 },
+    { phrase: 'Graphic Design', brand: 'Graphic Design', slide: 7 },
+    { phrase: 'UI/UX Design', brand: 'UI/UX Design', slide: 8 },
+    { phrase: 'Business Solutions', brand: 'Business Solutions', slide: 9 },
   ];
 
   const typedEl = document.querySelector('.typed-text');
@@ -249,16 +254,78 @@ document.addEventListener('DOMContentLoaded', () => {
   const slides = document.querySelectorAll('.showcase-slide');
 
   if (typedEl && brandEl && slides.length) {
+    let itemIndex = 0;
+    let charIndex = 0;
+    let deleting = false;
+    let cycleTimer = null;
+
     const setActiveSlide = (slideNum) => {
       slides.forEach(s => {
         s.classList.toggle('active', Number(s.dataset.pattern) === slideNum);
       });
     };
 
-    const heroItem = buildItems[0];
-    typedEl.textContent = heroItem.label;
-    brandEl.textContent = heroItem.label;
-    setActiveSlide(heroItem.slide);
+    const setBrand = (name) => {
+      // Subtle fade for the brand text
+      brandEl.style.opacity = '0';
+      setTimeout(() => {
+        brandEl.textContent = name;
+        brandEl.style.opacity = '1';
+      }, 180);
+    };
+
+    // Initialize
+    typedEl.textContent = '';
+    setActiveSlide(buildItems[0].slide);
+    brandEl.textContent = buildItems[0].brand;
+
+    const TYPING_SPEED = 70;
+    const DELETING_SPEED = 40;
+    const HOLD_AFTER_TYPED = 1600; // pause when fully typed
+    const HOLD_BEFORE_DELETE = 300;
+
+    const tick = () => {
+      const current = buildItems[itemIndex];
+      const phrase = current.phrase;
+
+      if (!deleting) {
+        // Typing forward
+        charIndex++;
+        typedEl.textContent = phrase.slice(0, charIndex);
+        if (charIndex === phrase.length) {
+          deleting = true;
+          cycleTimer = setTimeout(tick, HOLD_AFTER_TYPED);
+          return;
+        }
+        cycleTimer = setTimeout(tick, TYPING_SPEED);
+      } else {
+        // Deleting
+        charIndex--;
+        typedEl.textContent = phrase.slice(0, charIndex);
+        if (charIndex === 0) {
+          deleting = false;
+          itemIndex = (itemIndex + 1) % buildItems.length;
+          const next = buildItems[itemIndex];
+          // Swap the side showcase to match the next phrase
+          setActiveSlide(next.slide);
+          setBrand(next.brand);
+          cycleTimer = setTimeout(tick, HOLD_BEFORE_DELETE);
+          return;
+        }
+        cycleTimer = setTimeout(tick, DELETING_SPEED);
+      }
+    };
+
+    // Kick off after a small initial delay so the hero settles
+    cycleTimer = setTimeout(tick, 900);
+
+    // Safety: also rotate the slide every 2.5s in case typing speeds shift;
+    // we slave the slide to the current item index so they stay in sync.
+    setInterval(() => {
+      // Nothing to force here - the tick() routine handles swapping the
+      // slide & brand when a phrase finishes deleting. This interval is
+      // intentionally a no-op kept for future timing tweaks.
+    }, 2500);
   }
 
   /* ---------- Contact Form ---------- */
