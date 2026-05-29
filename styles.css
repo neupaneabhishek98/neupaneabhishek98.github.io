@@ -8,7 +8,7 @@
 :root {
   --color-sky: #219ebc;
   --color-navy: #023047;
-  --color-yellow: #ffb703;
+  --color-yellow: #ffd60a;
   --color-orange: #fb8500;
   --color-white: #ffffff;
   --color-matte: #18181b;
@@ -223,6 +223,7 @@ textarea {
 }
 
 .logo {
+  position: relative;
   display: inline-flex;
   align-items: center;
   font-family: var(--font-body);
@@ -234,7 +235,61 @@ textarea {
 }
 
 .logo:hover {
-  color: var(--primary);
+  color: var(--accent);
+}
+
+.logo::after {
+  content: attr(data-hover-hook);
+  position: absolute;
+  left: 0;
+  top: calc(100% + 12px);
+  width: max-content;
+  max-width: min(280px, calc(100vw - 48px));
+  padding: 9px 12px;
+  border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--border));
+  border-radius: 8px;
+  background: color-mix(in srgb, var(--bg-elev) 92%, var(--color-white));
+  box-shadow: var(--shadow-sm);
+  color: var(--text);
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1.3;
+  white-space: normal;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 20;
+}
+
+.logo::before {
+  content: '';
+  position: absolute;
+  left: 18px;
+  top: calc(100% + 7px);
+  width: 10px;
+  height: 10px;
+  border-left: 1px solid color-mix(in srgb, var(--accent) 55%, var(--border));
+  border-top: 1px solid color-mix(in srgb, var(--accent) 55%, var(--border));
+  background: color-mix(in srgb, var(--bg-elev) 92%, var(--color-white));
+  opacity: 0;
+  pointer-events: none;
+  transform: rotate(45deg) translateY(-4px);
+  transition: opacity 0.18s ease, transform 0.18s ease;
+  z-index: 21;
+}
+
+.logo:hover::after,
+.logo:focus-visible::after,
+.logo:hover::before,
+.logo:focus-visible::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.logo:hover::before,
+.logo:focus-visible::before {
+  transform: rotate(45deg) translateY(0);
 }
 
 .nav-links {
@@ -259,7 +314,10 @@ textarea {
   display: none;
 }
 
-.nav-link:hover,
+.nav-link:hover {
+  color: var(--accent);
+}
+
 .nav-link.active {
   color: var(--text);
 }
@@ -433,7 +491,6 @@ textarea {
 .typed-wrap {
   display: inline-flex;
   align-items: baseline;
-  /* Reserve fixed width matching the longest phrase so layout never shifts */
   width: 18ch;
   min-width: 18ch;
   min-height: 1.1em;
@@ -450,10 +507,9 @@ textarea {
 }
 
 .cursor {
-  display: inline-block;
+  display: none;
   margin-left: 2px;
   color: var(--primary);
-  animation: blink 1s infinite;
   font-weight: 300;
   letter-spacing: 0;
 }
@@ -517,7 +573,6 @@ textarea {
   border: 2px dashed var(--border);
   border-radius: 30px;
   z-index: 0;
-  animation: rotate 30s linear infinite;
 }
 
 .showcase-frame {
@@ -540,6 +595,10 @@ textarea {
 .showcase-slide.active {
   opacity: 1;
   transform: translateY(0) scale(1);
+}
+
+.showcase-slide.active .showcase-skill-icon {
+  animation: heroIconIdle 4.8s ease-in-out infinite;
 }
 
 .showcase-skill-icon {
@@ -613,7 +672,18 @@ textarea {
   font-size: clamp(1.3rem, 2.2vw, 1.3rem);
   font-weight: 700;
   color: var(--primary-2);
-  transition: opacity 0.3s ease;
+}
+
+@keyframes heroIconIdle {
+
+  0%,
+  100% {
+    transform: translateY(0) scale(1);
+  }
+
+  50% {
+    transform: translateY(-6px) scale(1.025);
+  }
 }
 
 /* ---------- Section Defaults ---------- */
@@ -768,9 +838,12 @@ textarea {
 /* ---------- Portfolio ---------- */
 .portfolio-carousel {
   position: relative;
+  --portfolio-edge: max(56px, calc((100vw - var(--container)) / 2 + 24px));
+  --portfolio-arrow-width: 24px;
+  --portfolio-arrow-gap: 6px;
   width: 100vw;
   margin-left: calc(50% - 50vw);
-  padding-inline: max(24px, calc((100vw - var(--container)) / 2 + 24px));
+  padding-inline: var(--portfolio-edge);
 }
 
 .portfolio-window {
@@ -805,7 +878,7 @@ textarea {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
+  width: var(--portfolio-arrow-width);
   height: min(220px, calc(100% - 36px));
   min-height: 128px;
   border-radius: 0;
@@ -820,15 +893,15 @@ textarea {
 }
 
 .portfolio-arrow-prev {
-  left: 0;
+  left: max(6px, calc(var(--portfolio-edge) - var(--portfolio-arrow-width) - var(--portfolio-arrow-gap)));
 }
 
 .portfolio-arrow-next {
-  right: 0;
+  right: max(6px, calc(var(--portfolio-edge) - var(--portfolio-arrow-width) - var(--portfolio-arrow-gap)));
 }
 
 .portfolio-arrow:hover {
-  color: var(--primary);
+  color: var(--accent);
   background: color-mix(in srgb, var(--bg-elev) 94%, var(--color-white));
   opacity: 0.86;
 }
@@ -1980,6 +2053,7 @@ textarea {
   }
 
   .portfolio-arrow {
+    --portfolio-edge: 48px;
     width: 24px;
     height: 132px;
     min-height: 0;
@@ -1987,11 +2061,11 @@ textarea {
   }
 
   .portfolio-arrow-prev {
-    left: 0;
+    left: max(6px, calc(var(--portfolio-edge) - var(--portfolio-arrow-width) - var(--portfolio-arrow-gap)));
   }
 
   .portfolio-arrow-next {
-    right: 0;
+    right: max(6px, calc(var(--portfolio-edge) - var(--portfolio-arrow-width) - var(--portfolio-arrow-gap)));
   }
 
   .build-link {

@@ -24,6 +24,35 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
 
+  /* ---------- Header title hover hooks ---------- */
+  const logo = document.querySelector('.logo');
+  const logoHooks = [
+    'Would love to work with you!',
+    "Let's work together.",
+    'Hi, nice to see you here.',
+    'Got an idea? I can help.',
+    'Your next project starts here.',
+    'Open for meaningful builds.',
+    'Let\'s turn ideas into products.',
+    'Need a clean digital solution?',
+    'Always happy to collaborate.',
+    'Let\'s build something useful.',
+    'Thanks for stopping by.',
+    'Ready when you are.'
+  ];
+
+  const setRandomLogoHook = () => {
+    if (!logo) return;
+    const currentHook = logo.dataset.hoverHook;
+    const nextHooks = logoHooks.filter(hook => hook !== currentHook);
+    const hookPool = nextHooks.length ? nextHooks : logoHooks;
+    logo.dataset.hoverHook = hookPool[Math.floor(Math.random() * hookPool.length)];
+  };
+
+  logo?.addEventListener('mouseenter', setRandomLogoHook);
+  logo?.addEventListener('focus', setRandomLogoHook);
+  setRandomLogoHook();
+
   document.querySelectorAll('a[href^="#"]').forEach(link => {
     link.addEventListener('click', (e) => {
       const hash = link.getAttribute('href');
@@ -79,6 +108,7 @@ document.addEventListener('DOMContentLoaded', () => {
   revealEls.forEach(el => io.observe(el));
 
   /* ---------- Selected work carousel ---------- */
+  const portfolioCarousel = document.querySelector('.portfolio-carousel');
   const portfolioTrack = document.getElementById('portfolioTrack');
   const portfolioPrev = document.querySelector('.portfolio-arrow-prev');
   const portfolioNext = document.querySelector('.portfolio-arrow-next');
@@ -95,6 +125,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let carouselMoving = false;
     let carouselTimer = null;
     let carouselMotionTimer = null;
+    let carouselPaused = false;
     const CAROUSEL_DELAY = 2500;
     const CAROUSEL_MOTION = 580;
 
@@ -124,6 +155,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const startCarousel = () => {
       if (document.hidden) return;
+      if (carouselPaused) return;
       if (!carouselTimer) carouselTimer = window.setInterval(movePortfolio, CAROUSEL_DELAY);
     };
 
@@ -160,6 +192,32 @@ document.addEventListener('DOMContentLoaded', () => {
 
     portfolioNext?.addEventListener('click', movePortfolio);
 
+    portfolioCarousel?.addEventListener('pointerenter', () => {
+      carouselPaused = true;
+      stopCarousel();
+    });
+
+    portfolioCarousel?.addEventListener('pointerleave', () => {
+      carouselPaused = false;
+      startCarousel();
+    });
+
+    portfolioCarousel?.addEventListener('focusin', () => {
+      carouselPaused = true;
+      stopCarousel();
+    });
+
+    portfolioCarousel?.addEventListener('focusout', (event) => {
+      if (portfolioCarousel.contains(event.relatedTarget)) return;
+      carouselPaused = false;
+      startCarousel();
+    });
+
+    portfolioCarousel?.addEventListener('wheel', () => {
+      carouselPaused = true;
+      stopCarousel();
+    }, { passive: true });
+
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
         stopCarousel();
@@ -175,20 +233,15 @@ document.addEventListener('DOMContentLoaded', () => {
     window.addEventListener('focus', startCarousel);
   }
 
-  /* ---------- Hero: paired typewriter + showcase carousel ----------
-     Each item pairs a typed phrase with a skill shown in the side card.
-     Slides advance every 2.5s with the typed phrase + brand staying in sync.
-  ---------------------------------------------------------------- */
+  /* ---------- Hero: static paired skill text + showcase icon ---------- */
   const buildItems = [
-    { phrase: 'Practical Apps', brand: 'Android Apps', slide: 1 },
-    { phrase: 'Useful Products', brand: 'Web Applications', slide: 2 },
-    { phrase: 'Clean Interfaces', brand: 'iOS Apps', slide: 3 },
-    { phrase: 'PC Softwares', brand: 'PC Softwares', slide: 4 },
-    { phrase: 'Websites', brand: 'Websites', slide: 5 },
-    { phrase: 'Digital Marketing', brand: 'Digital Marketing', slide: 6 },
-    { phrase: 'Graphic Design', brand: 'Graphic Design', slide: 7 },
-    { phrase: 'UI/UX Design', brand: 'UI/UX Design', slide: 8 },
-    { phrase: 'Business Solutions', brand: 'Business Solutions', slide: 9 },
+    { label: 'PC softwares', slide: 4 },
+    { label: 'Marketing Tools', slide: 6 },
+    { label: 'Android Apps', slide: 1 },
+    { label: 'Modern Websites', slide: 5 },
+    { label: 'Graphic Designs', slide: 7 },
+    { label: 'Web Applications', slide: 2 },
+    { label: 'iOS Apps', slide: 3 },
   ];
 
   const typedEl = document.querySelector('.typed-text');
@@ -196,78 +249,16 @@ document.addEventListener('DOMContentLoaded', () => {
   const slides = document.querySelectorAll('.showcase-slide');
 
   if (typedEl && brandEl && slides.length) {
-    let itemIndex = 0;
-    let charIndex = 0;
-    let deleting = false;
-    let cycleTimer = null;
-
     const setActiveSlide = (slideNum) => {
       slides.forEach(s => {
         s.classList.toggle('active', Number(s.dataset.pattern) === slideNum);
       });
     };
 
-    const setBrand = (name) => {
-      // Subtle fade for the brand text
-      brandEl.style.opacity = '0';
-      setTimeout(() => {
-        brandEl.textContent = name;
-        brandEl.style.opacity = '1';
-      }, 180);
-    };
-
-    // Initialize
-    typedEl.textContent = '';
-    setActiveSlide(buildItems[0].slide);
-    brandEl.textContent = buildItems[0].brand;
-
-    const TYPING_SPEED = 70;
-    const DELETING_SPEED = 40;
-    const HOLD_AFTER_TYPED = 1600; // pause when fully typed
-    const HOLD_BEFORE_DELETE = 300;
-
-    const tick = () => {
-      const current = buildItems[itemIndex];
-      const phrase = current.phrase;
-
-      if (!deleting) {
-        // Typing forward
-        charIndex++;
-        typedEl.textContent = phrase.slice(0, charIndex);
-        if (charIndex === phrase.length) {
-          deleting = true;
-          cycleTimer = setTimeout(tick, HOLD_AFTER_TYPED);
-          return;
-        }
-        cycleTimer = setTimeout(tick, TYPING_SPEED);
-      } else {
-        // Deleting
-        charIndex--;
-        typedEl.textContent = phrase.slice(0, charIndex);
-        if (charIndex === 0) {
-          deleting = false;
-          itemIndex = (itemIndex + 1) % buildItems.length;
-          const next = buildItems[itemIndex];
-          // Swap the side showcase to match the next phrase
-          setActiveSlide(next.slide);
-          setBrand(next.brand);
-          cycleTimer = setTimeout(tick, HOLD_BEFORE_DELETE);
-          return;
-        }
-        cycleTimer = setTimeout(tick, DELETING_SPEED);
-      }
-    };
-
-    // Kick off after a small initial delay so the hero settles
-    cycleTimer = setTimeout(tick, 900);
-
-    // Safety: also rotate the slide every 2.5s in case typing speeds shift;
-    // we slave the slide to the current item index so they stay in sync.
-    setInterval(() => {
-      // Nothing to force here - the tick() routine handles swapping the
-      // slide & brand when a phrase finishes deleting. This interval is
-      // intentionally a no-op kept for future timing tweaks.
-    }, 2500);
+    const heroItem = buildItems[0];
+    typedEl.textContent = heroItem.label;
+    brandEl.textContent = heroItem.label;
+    setActiveSlide(heroItem.slide);
   }
 
   /* ---------- Contact Form ---------- */
