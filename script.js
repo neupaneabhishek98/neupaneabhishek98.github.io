@@ -332,19 +332,62 @@ document.addEventListener('DOMContentLoaded', () => {
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
   const contactMethodInput = document.getElementById('contactMethod');
+  const projectSelect = document.getElementById('projectSelect');
+  const selectedProjectsEl = document.getElementById('selectedProjects');
+  const selectedProjects = [];
 
   const looksLikeEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   const normalizeContactMethod = () => {
     if (!contactMethodInput) return;
     const rawValue = contactMethodInput.value.trim();
     if (!rawValue || looksLikeEmail(rawValue) || rawValue.startsWith('+')) return;
+    if (/[A-Za-z@]/.test(rawValue)) return;
 
     const digits = rawValue.replace(/[^\d]/g, '');
-    if (digits.length >= 7) {
+    if (digits.length) {
       contactMethodInput.value = `+977 ${digits}`;
+      contactMethodInput.setSelectionRange(contactMethodInput.value.length, contactMethodInput.value.length);
     }
   };
 
+  const renderSelectedProjects = () => {
+    if (!selectedProjectsEl) return;
+    selectedProjectsEl.innerHTML = '';
+    selectedProjects.forEach((project) => {
+      const row = document.createElement('div');
+      row.className = 'selected-project';
+      row.dataset.project = project;
+
+      const text = document.createElement('span');
+      text.textContent = project;
+
+      const removeButton = document.createElement('button');
+      removeButton.type = 'button';
+      removeButton.className = 'selected-project-remove';
+      removeButton.setAttribute('aria-label', `Remove ${project}`);
+      removeButton.innerHTML = '<i class="fa-solid fa-trash" aria-hidden="true"></i>';
+      removeButton.addEventListener('click', () => {
+        const index = selectedProjects.indexOf(project);
+        if (index !== -1) selectedProjects.splice(index, 1);
+        renderSelectedProjects();
+      });
+
+      row.append(text, removeButton);
+      selectedProjectsEl.appendChild(row);
+    });
+  };
+
+  projectSelect?.addEventListener('change', () => {
+    const project = projectSelect.value;
+    if (project && !selectedProjects.includes(project)) {
+      selectedProjects.push(project);
+      selectedProjectsEl?.classList.remove('invalid');
+      renderSelectedProjects();
+    }
+    projectSelect.value = '';
+  });
+
+  contactMethodInput?.addEventListener('input', normalizeContactMethod);
   contactMethodInput?.addEventListener('blur', normalizeContactMethod);
 
   form?.addEventListener('submit', (e) => {
@@ -354,24 +397,26 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const nameField = form.elements.namedItem('name');
     const contactField = form.elements.namedItem('contactMethod');
-    const projectField = form.elements.namedItem('project');
     const descriptionField = form.elements.namedItem('description');
-    const projectOptions = form.querySelector('.project-options');
 
     const name = nameField.value.trim();
     normalizeContactMethod();
     const contactMethod = contactField.value.trim();
-    const project = projectField?.value || '';
     const description = descriptionField.value.trim();
     const isValidContact = looksLikeEmail(contactMethod) || /^\+\d[\d\s-]{6,}$/.test(contactMethod);
 
     [nameField, contactField, descriptionField].forEach(f => f.classList.remove('invalid'));
-    projectOptions?.classList.remove('invalid');
+    projectSelect?.classList.remove('invalid');
+    selectedProjectsEl?.classList.remove('invalid');
 
     let hasError = false;
     if (!name) { nameField.classList.add('invalid'); hasError = true; }
     if (!contactMethod || !isValidContact) { contactField.classList.add('invalid'); hasError = true; }
-    if (!project) { projectOptions?.classList.add('invalid'); hasError = true; }
+    if (!selectedProjects.length) {
+      projectSelect?.classList.add('invalid');
+      selectedProjectsEl?.classList.add('invalid');
+      hasError = true;
+    }
     if (!description) { descriptionField.classList.add('invalid'); hasError = true; }
 
     if (hasError) {
@@ -384,8 +429,8 @@ document.addEventListener('DOMContentLoaded', () => {
       'Hi Abhishek, I would like to connect.',
       '',
       `Name: ${name}`,
-      `Number or Email: ${contactMethod}`,
-      `Project: ${project}`,
+      `Contact: ${contactMethod}`,
+      `Project: ${selectedProjects.join(', ')}`,
       '',
       `Description: ${description}`,
     ].join('\n');
@@ -397,6 +442,8 @@ document.addEventListener('DOMContentLoaded', () => {
     window.location.href = whatsapp;
 
     setTimeout(() => { form.reset(); }, 800);
+    selectedProjects.splice(0, selectedProjects.length);
+    renderSelectedProjects();
   });
 
   /* ---------- CV Download placeholder ---------- */
