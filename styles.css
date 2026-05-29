@@ -37,7 +37,7 @@
   --text-soft: var(--gray-100);
   --primary: var(--color-navy);
   --primary-2: var(--color-sky);
-  --accent: var(--color-yellow);
+  --accent: var(--color-orange);
   --yellow: var(--color-yellow);
   --yellow-soft: var(--color-yellow);
   --success: var(--color-sky);
@@ -182,6 +182,40 @@ textarea {
   background: var(--color-matte);
 }
 
+.btn-quote {
+  position: relative;
+  min-width: 230px;
+  min-height: 52px;
+  padding-right: 58px;
+  overflow: hidden;
+}
+
+.btn-quote span {
+  position: relative;
+  z-index: 1;
+  transition: transform 0.45s var(--ease);
+}
+
+.btn-quote i {
+  position: absolute;
+  top: 50%;
+  right: 24px;
+  z-index: 1;
+  transform: translateY(-50%);
+  transition: transform 0.45s var(--ease);
+  pointer-events: none;
+}
+
+.btn-quote:hover span,
+.btn-quote:focus-visible span {
+  transform: translateX(30px);
+}
+
+.btn-quote:hover i,
+.btn-quote:focus-visible i {
+  transform: translate(10px, -145%) rotate(18deg);
+}
+
 .btn-secondary {
   background: transparent;
   color: var(--text);
@@ -247,11 +281,11 @@ textarea {
   width: max-content;
   max-width: min(280px, calc(100vw - 48px));
   padding: 9px 12px;
-  border: 1px solid color-mix(in srgb, var(--accent) 55%, var(--border));
+  border: 1px solid color-mix(in srgb, var(--primary) 78%, var(--border));
   border-radius: 8px;
-  background: color-mix(in srgb, var(--bg-elev) 92%, var(--color-white));
+  background: var(--primary);
   box-shadow: var(--shadow-sm);
-  color: var(--text);
+  color: var(--color-white);
   font-size: 0.78rem;
   font-weight: 800;
   line-height: 1.3;
@@ -270,9 +304,9 @@ textarea {
   top: calc(100% + 7px);
   width: 10px;
   height: 10px;
-  border-left: 1px solid color-mix(in srgb, var(--accent) 55%, var(--border));
-  border-top: 1px solid color-mix(in srgb, var(--accent) 55%, var(--border));
-  background: color-mix(in srgb, var(--bg-elev) 92%, var(--color-white));
+  border-left: 1px solid color-mix(in srgb, var(--primary) 78%, var(--border));
+  border-top: 1px solid color-mix(in srgb, var(--primary) 78%, var(--border));
+  background: var(--primary);
   opacity: 0;
   pointer-events: none;
   transform: rotate(45deg) translateY(-4px);
@@ -1732,6 +1766,7 @@ textarea {
   gap: 4px;
   width: fit-content;
   color: var(--color-white);
+  transition: color 0.35s ease-in-out;
 }
 
 .footer-brand span {
@@ -1741,6 +1776,7 @@ textarea {
   letter-spacing: 0.08em;
   text-transform: uppercase;
   line-height: 1.1;
+  transition: color 0.35s ease-in-out;
 }
 
 .footer-brand small {
@@ -1749,6 +1785,7 @@ textarea {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+  transition: color 0.35s ease-in-out;
 }
 
 .footer-column {
@@ -1772,7 +1809,7 @@ textarea {
 }
 
 .footer-brand:hover small {
-  color: var(--color-white);
+  color: color-mix(in srgb, var(--accent) 70%, var(--color-white));
 }
 
 .footer-social,
@@ -1784,8 +1821,8 @@ textarea {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-  border: 1px solid var(--color-white);
-  color: rgba(255, 255, 255, 0.82);
+  border: 1px solid var(--accent);
+  color: var(--accent);
   transition: transform 0.22s var(--ease), background 0.22s ease, border-color 0.22s ease, color 0.22s ease;
 }
 
@@ -1821,8 +1858,8 @@ textarea {
 }
 
 .footer-top-link:hover {
-  color: var(--accent);
-  border-color: var(--accent);
+  color: rgba(255, 255, 255, 0.86);
+  border-color: var(--color-white);
 }
 
 .footer-top-link i {
@@ -1902,6 +1939,69 @@ textarea {
 }
 
 /* ---------- Responsive ---------- */
+@media (min-width: 1537px) {
+  :root {
+    --container: 1564px;
+    --nav-h: 96px;
+  }
+
+  .container {
+    padding-inline: 28px;
+  }
+
+  .logo {
+    font-size: clamp(1.18rem, 1.55vw, 1.42rem);
+  }
+
+  .nav-link {
+    font-size: 1.08rem;
+  }
+
+  .hero {
+    padding: calc(var(--nav-h) + 46px) 0 104px;
+  }
+
+  .hero-content {
+    gap: 56px;
+  }
+
+  .hero-title {
+    font-size: clamp(4.2rem, 5.8vw, 5.25rem);
+  }
+
+  .hero-line-2 {
+    font-size: clamp(2.4rem, 3.5vw, 3rem);
+  }
+
+  .hero-subtitle {
+    max-width: 650px;
+    font-size: 1.25rem;
+  }
+
+  .btn {
+    padding: 16px 30px;
+    font-size: 1.08rem;
+  }
+
+  .btn-quote {
+    min-width: 270px;
+    min-height: 60px;
+  }
+
+  .showcase-wrapper {
+    width: min(368px, 100%);
+    margin-right: 0;
+  }
+
+  .section-title {
+    font-size: clamp(2.65rem, 4.5vw, 3.45rem);
+  }
+
+  .portfolio-carousel {
+    --portfolio-edge: max(48px, calc((100vw - var(--container)) / 2 + 28px));
+  }
+}
+
 @media (min-width: 761px) and (max-width: 1536px) {
   :root {
     --container: 1220px;
