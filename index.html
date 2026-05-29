@@ -338,16 +338,26 @@
             <input type="text" id="name" name="name" placeholder="Your Name" required />
           </div>
           <div class="form-group">
-            <label for="phone">Number</label>
-            <input type="tel" id="phone" name="phone" placeholder="+977 98XXXXXXXX" required />
+            <label for="contactMethod">Number or Email</label>
+            <input type="text" id="contactMethod" name="contactMethod" placeholder="+977 98XXXXXXXX or email@example.com"
+              required />
           </div>
           <div class="form-group">
-            <label for="subject">Subject</label>
-            <input type="text" id="subject" name="subject" placeholder="Subject" required />
+            <span class="form-label">Project</span>
+            <div class="project-options" role="radiogroup" aria-label="Project type">
+              <label><input type="radio" name="project" value="Mobile App" required /> <span>Mobile App</span></label>
+              <label><input type="radio" name="project" value="Website" /> <span>Website</span></label>
+              <label><input type="radio" name="project" value="Web Application" /> <span>Web Application</span></label>
+              <label><input type="radio" name="project" value="Local Software" /> <span>Local Software</span></label>
+              <label><input type="radio" name="project" value="Branding" /> <span>Branding</span></label>
+              <label><input type="radio" name="project" value="Logo Design" /> <span>Logo Design</span></label>
+              <label><input type="radio" name="project" value="Other" /> <span>Other</span></label>
+            </div>
           </div>
           <div class="form-group">
-            <label for="message">Message</label>
-            <textarea id="message" name="message" rows="5" placeholder="Your message..." required></textarea>
+            <label for="description">Description</label>
+            <textarea id="description" name="description" rows="5"
+              placeholder="please describe what you have in mind" required></textarea>
           </div>
           <button type="submit" class="btn btn-primary btn-block">
             Send Message

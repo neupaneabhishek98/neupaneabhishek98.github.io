@@ -331,27 +331,51 @@ document.addEventListener('DOMContentLoaded', () => {
   /* ---------- Contact Form ---------- */
   const form = document.getElementById('contactForm');
   const status = document.getElementById('formStatus');
+  const contactMethodInput = document.getElementById('contactMethod');
+
+  const looksLikeEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+  const normalizeContactMethod = () => {
+    if (!contactMethodInput) return;
+    const rawValue = contactMethodInput.value.trim();
+    if (!rawValue || looksLikeEmail(rawValue) || rawValue.startsWith('+')) return;
+
+    const digits = rawValue.replace(/[^\d]/g, '');
+    if (digits.length >= 7) {
+      contactMethodInput.value = `+977 ${digits}`;
+    }
+  };
+
+  contactMethodInput?.addEventListener('blur', normalizeContactMethod);
 
   form?.addEventListener('submit', (e) => {
     e.preventDefault();
     status.textContent = '';
     status.className = 'form-status';
 
-    const name = form.name.value.trim();
-    const phone = form.phone.value.trim();
-    const subject = form.subject.value.trim();
-    const message = form.message.value.trim();
+    const nameField = form.elements.namedItem('name');
+    const contactField = form.elements.namedItem('contactMethod');
+    const projectField = form.elements.namedItem('project');
+    const descriptionField = form.elements.namedItem('description');
+    const projectOptions = form.querySelector('.project-options');
 
-    [form.name, form.phone, form.subject, form.message].forEach(f => f.classList.remove('invalid'));
+    const name = nameField.value.trim();
+    normalizeContactMethod();
+    const contactMethod = contactField.value.trim();
+    const project = projectField?.value || '';
+    const description = descriptionField.value.trim();
+    const isValidContact = looksLikeEmail(contactMethod) || /^\+\d[\d\s-]{6,}$/.test(contactMethod);
+
+    [nameField, contactField, descriptionField].forEach(f => f.classList.remove('invalid'));
+    projectOptions?.classList.remove('invalid');
 
     let hasError = false;
-    if (!name) { form.name.classList.add('invalid'); hasError = true; }
-    if (!phone) { form.phone.classList.add('invalid'); hasError = true; }
-    if (!subject) { form.subject.classList.add('invalid'); hasError = true; }
-    if (!message) { form.message.classList.add('invalid'); hasError = true; }
+    if (!name) { nameField.classList.add('invalid'); hasError = true; }
+    if (!contactMethod || !isValidContact) { contactField.classList.add('invalid'); hasError = true; }
+    if (!project) { projectOptions?.classList.add('invalid'); hasError = true; }
+    if (!description) { descriptionField.classList.add('invalid'); hasError = true; }
 
     if (hasError) {
-      status.textContent = 'Please fill in your name, number, subject, and message.';
+      status.textContent = 'Please fill in your name, number or email, project type, and description.';
       status.classList.add('error');
       return;
     }
@@ -360,10 +384,10 @@ document.addEventListener('DOMContentLoaded', () => {
       'Hi Abhishek, I would like to connect.',
       '',
       `Name: ${name}`,
-      `Number: ${phone}`,
-      `Subject: ${subject}`,
+      `Number or Email: ${contactMethod}`,
+      `Project: ${project}`,
       '',
-      `Message: ${message}`,
+      `Description: ${description}`,
     ].join('\n');
 
     const whatsapp = `https://wa.me/9779742598237?text=${encodeURIComponent(contactMessage)}`;
