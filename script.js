@@ -335,6 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const projectSelect = document.getElementById('projectSelect');
   const selectedProjectsEl = document.getElementById('selectedProjects');
   const selectedProjects = [];
+  const quoteEmailEndpoint = 'https://formsubmit.co/ajax/neupaneabhishek98@gmail.com';
 
   const looksLikeEmail = (value) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   const normalizeContactMethod = () => {
@@ -390,10 +391,11 @@ document.addEventListener('DOMContentLoaded', () => {
   contactMethodInput?.addEventListener('input', normalizeContactMethod);
   contactMethodInput?.addEventListener('blur', normalizeContactMethod);
 
-  form?.addEventListener('submit', (e) => {
+  form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     status.textContent = '';
     status.className = 'form-status';
+    const submitButton = form.querySelector('button[type="submit"]');
 
     const nameField = form.elements.namedItem('name');
     const contactField = form.elements.namedItem('contactMethod');
@@ -425,25 +427,48 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    const contactMessage = [
-      'Hi Abhishek, I would like to connect.',
-      '',
-      `Name: ${name}`,
-      `Contact: ${contactMethod}`,
-      `Project: ${selectedProjects.join(', ')}`,
-      '',
-      `Description: ${description}`,
-    ].join('\n');
+    const payload = {
+      _subject: `New quote request from ${name}`,
+      _template: 'table',
+      _captcha: 'false',
+      name,
+      contact: contactMethod,
+      project: selectedProjects.join(', '),
+      description,
+    };
 
-    const whatsapp = `https://wa.me/9779742598237?text=${encodeURIComponent(contactMessage)}`;
+    if (looksLikeEmail(contactMethod)) {
+      payload.email = contactMethod;
+      payload._replyto = contactMethod;
+    }
 
-    status.textContent = 'Opening WhatsApp with your message...';
+    status.textContent = 'Sending your message...';
     status.classList.add('success');
-    window.location.href = whatsapp;
+    if (submitButton) submitButton.disabled = true;
 
-    setTimeout(() => { form.reset(); }, 800);
-    selectedProjects.splice(0, selectedProjects.length);
-    renderSelectedProjects();
+    try {
+      const response = await fetch(quoteEmailEndpoint, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error('Email submission failed');
+
+      status.textContent = 'Message sent. I will get back to you soon.';
+      form.reset();
+      selectedProjects.splice(0, selectedProjects.length);
+      renderSelectedProjects();
+    } catch (error) {
+      status.textContent = 'Could not send the message. Please try again or email me directly.';
+      status.classList.remove('success');
+      status.classList.add('error');
+    } finally {
+      if (submitButton) submitButton.disabled = false;
+    }
   });
 
   /* ---------- CV Download placeholder ---------- */
