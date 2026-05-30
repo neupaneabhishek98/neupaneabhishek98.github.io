@@ -281,21 +281,14 @@ textarea {
 }
 
 .brand-logo-hover {
+  display: none;
   color: var(--accent);
   opacity: 0;
 }
 
 .logo:hover .brand-logo-current,
-.logo:focus-visible .brand-logo-current,
-.footer-brand:hover .brand-logo-current,
-.footer-brand:focus-visible .brand-logo-current {
-  opacity: 0;
-}
-
-.logo:hover .brand-logo-hover,
-.logo:focus-visible .brand-logo-hover,
-.footer-brand:hover .brand-logo-hover,
-.footer-brand:focus-visible .brand-logo-hover {
+.logo:focus-visible .brand-logo-current {
+  color: var(--accent);
   opacity: 1;
 }
 
@@ -1179,12 +1172,25 @@ textarea {
 }
 
 .credential-stat strong {
-  display: block;
+  display: flex;
+  align-items: baseline;
   margin-bottom: 9px;
   color: var(--primary);
   font-family: var(--font-head);
   font-size: clamp(2rem, 4vw, 2.75rem);
   line-height: 1;
+}
+
+.stat-plus {
+  display: inline-block;
+  opacity: 0;
+  transform: translateX(-0.18em);
+  transition: opacity 0.24s ease, transform 0.34s var(--ease);
+}
+
+.stat-plus.is-visible {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .credential-stat span {
@@ -1777,7 +1783,7 @@ textarea {
 /* ---------- Footer ---------- */
 .footer {
   padding: 64px 0 44px;
-  background: var(--color-matte);
+  background: var(--color-navy);
   color: var(--color-white);
 }
 
@@ -1825,7 +1831,7 @@ textarea {
 }
 
 .footer-brand .brand-logo-hover {
-  color: var(--color-red);
+  color: var(--accent);
 }
 
 .footer-brand small {
@@ -1876,7 +1882,13 @@ textarea {
 
 .footer-brand:hover,
 .footer-column a:hover {
-  color: var(--color-white);
+  color: var(--accent);
+}
+
+.footer-brand:hover .brand-logo-current,
+.footer-brand:focus-visible .brand-logo-current {
+  color: var(--accent);
+  opacity: 1;
 }
 
 .footer-brand:hover small {
@@ -1919,13 +1931,16 @@ textarea {
 .footer-top-link {
   width: auto;
   min-width: 112px;
+  height: 54px;
   gap: 9px;
-  padding: 4px 18px 0;
+  padding: 0 18px 7px;
   border-radius: 4px;
   font-size: 0.72rem;
   font-weight: 800;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+  align-items: flex-end;
+  overflow: hidden;
 }
 
 .footer-top-link:hover {
@@ -1934,18 +1949,18 @@ textarea {
 }
 
 .footer-top-link i {
-  transition: none;
-  transform: none;
+  transition: transform 0.34s var(--ease);
+  transform: translateY(0);
 }
 
 .footer-top-link span {
-  transition: none;
-  transform: none;
+  transition: transform 0.34s var(--ease);
+  transform: translateY(0);
 }
 
 .footer-top-link:hover i,
 .footer-top-link:hover span {
-  transform: none;
+  transform: translateY(-16px);
 }
 
 .footer-divider {

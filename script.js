@@ -108,8 +108,6 @@ document.addEventListener('DOMContentLoaded', () => {
   revealEls.forEach(el => io.observe(el));
 
   /* ---------- Selected work carousel ---------- */
-  const portfolioCarousel = document.querySelector('.portfolio-carousel');
-  const portfolioWindow = document.querySelector('.portfolio-window');
   const portfolioTrack = document.getElementById('portfolioTrack');
   const portfolioPrev = document.querySelector('.portfolio-arrow-prev');
   const portfolioNext = document.querySelector('.portfolio-arrow-next');
@@ -172,6 +170,16 @@ document.addEventListener('DOMContentLoaded', () => {
       finishMotion();
     };
 
+    const pauseCarousel = () => {
+      carouselPaused = true;
+      stopCarousel();
+    };
+
+    const resumeCarousel = () => {
+      carouselPaused = false;
+      startCarousel();
+    };
+
     portfolioPrev?.addEventListener('click', () => {
       const step = getStep();
       const lastCard = portfolioTrack.querySelector('.project-card:last-child');
@@ -193,38 +201,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
     portfolioNext?.addEventListener('click', movePortfolio);
 
-    portfolioCarousel?.addEventListener('pointerenter', () => {
-      carouselPaused = true;
-      stopCarousel();
+    [portfolioPrev, portfolioNext].forEach((arrow) => {
+      arrow?.addEventListener('pointerenter', pauseCarousel);
+      arrow?.addEventListener('pointerleave', resumeCarousel);
+      arrow?.addEventListener('mouseenter', pauseCarousel);
+      arrow?.addEventListener('mouseleave', resumeCarousel);
+      arrow?.addEventListener('focus', pauseCarousel);
+      arrow?.addEventListener('blur', resumeCarousel);
     });
-
-    portfolioCarousel?.addEventListener('pointerleave', () => {
-      carouselPaused = false;
-      startCarousel();
-    });
-
-    portfolioCarousel?.addEventListener('focusin', () => {
-      carouselPaused = true;
-      stopCarousel();
-    });
-
-    portfolioCarousel?.addEventListener('focusout', (event) => {
-      if (portfolioCarousel.contains(event.relatedTarget)) return;
-      carouselPaused = false;
-      startCarousel();
-    });
-
-    portfolioCarousel?.addEventListener('wheel', (event) => {
-      carouselPaused = true;
-      stopCarousel();
-
-      if (!portfolioWindow) return;
-      const scrollAmount = Math.abs(event.deltaX) > Math.abs(event.deltaY)
-        ? event.deltaX
-        : event.deltaY;
-      portfolioWindow.scrollLeft += scrollAmount;
-      event.preventDefault();
-    }, { passive: false });
 
     document.addEventListener('visibilitychange', () => {
       if (document.hidden) {
@@ -239,6 +223,63 @@ document.addEventListener('DOMContentLoaded', () => {
 
     window.addEventListener('blur', stopCarousel);
     window.addEventListener('focus', startCarousel);
+  }
+
+  /* ---------- Credential counters ---------- */
+  const statNumbers = document.querySelectorAll('.credential-stat strong[data-count]');
+
+  const formatStatNumber = (value) => new Intl.NumberFormat('en-US').format(value);
+
+  const prepareStatCounters = () => {
+    statNumbers.forEach((stat) => {
+      const suffix = stat.dataset.suffix || '';
+      stat.innerHTML = `<span class="stat-value">0</span><span class="stat-plus" aria-hidden="true">${suffix}</span>`;
+      stat.setAttribute('aria-label', `0${suffix}`);
+    });
+  };
+
+  const animateStat = (stat) => {
+    const total = Number.parseInt(stat.dataset.count || '0', 10);
+    const duration = Number.parseInt(stat.dataset.duration || '700', 10);
+    const suffix = stat.dataset.suffix || '';
+    const valueEl = stat.querySelector('.stat-value');
+    const plusEl = stat.querySelector('.stat-plus');
+    const startTime = performance.now();
+
+    const tick = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(total * eased);
+
+      if (valueEl) valueEl.textContent = formatStatNumber(current);
+      stat.setAttribute('aria-label', `${formatStatNumber(current)}${suffix}`);
+
+      if (progress < 1) {
+        requestAnimationFrame(tick);
+        return;
+      }
+
+      if (valueEl) valueEl.textContent = formatStatNumber(total);
+      stat.setAttribute('aria-label', `${formatStatNumber(total)}${suffix}`);
+      plusEl?.classList.add('is-visible');
+    };
+
+    requestAnimationFrame(tick);
+  };
+
+  if (statNumbers.length) {
+    prepareStatCounters();
+
+    const statObserver = new IntersectionObserver((entries, observer) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        statNumbers.forEach(animateStat);
+        observer.disconnect();
+      });
+    }, { threshold: 0.35 });
+
+    const statGrid = document.querySelector('.credential-stats');
+    statObserver.observe(statGrid || statNumbers[0]);
   }
 
   /* ---------- Hero: paired typewriter + showcase carousel ----------
