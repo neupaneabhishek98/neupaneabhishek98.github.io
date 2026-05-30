@@ -8,8 +8,9 @@
 :root {
   --color-sky: #219ebc;
   --color-navy: #023047;
-  --color-yellow: var(--color-orange);
   --color-orange: #fb8500;
+  --color-red: #ff0002;
+  --color-green: #16a34a;
   --color-white: #ffffff;
   --color-matte: #18181b;
   --gray-50: #f0f2fa;
@@ -23,7 +24,7 @@
   --brand-instagram-gradient: linear-gradient(135deg, #833ab4 0%, #e4405f 45%, #f77737 100%);
   --brand-whatsapp: #25d366;
   --brand-github: #181717;
-  --brand-gmail: #ea4335;
+  --brand-gmail: var(--color-red);
   --brand-android: var(--color-sky);
 
   --bg: var(--color-matte);
@@ -38,11 +39,11 @@
   --primary: var(--color-navy);
   --primary-2: var(--color-sky);
   --accent: var(--color-orange);
-  --yellow: var(--color-yellow);
-  --yellow-soft: var(--color-yellow);
-  --success: var(--color-sky);
-  --danger: var(--color-orange);
-  --grad: linear-gradient(135deg, var(--color-navy) 0%, var(--color-sky) 58%, var(--color-yellow) 100%);
+  --yellow: var(--color-orange);
+  --yellow-soft: var(--color-orange);
+  --success: var(--color-green);
+  --danger: var(--color-red);
+  --grad: linear-gradient(135deg, var(--color-navy) 0%, var(--color-sky) 58%, var(--color-orange) 100%);
 
   --radius-sm: 8px;
   --radius: 14px;
@@ -208,12 +209,12 @@ textarea {
 
 .btn-quote:hover span,
 .btn-quote:focus-visible span {
-  transform: translateX(30px);
+  transform: none;
 }
 
 .btn-quote:hover i,
 .btn-quote:focus-visible i {
-  transform: translate(10px, -145%) rotate(18deg);
+  transform: translateY(-50%) rotate(10deg);
 }
 
 .btn-secondary {
@@ -259,7 +260,7 @@ textarea {
 
 .logo {
   position: relative;
-  display: inline-flex;
+  display: inline-grid;
   align-items: center;
   font-family: var(--font-body);
   font-weight: 800;
@@ -271,6 +272,31 @@ textarea {
 
 .logo:hover {
   color: var(--accent);
+}
+
+.brand-logo-current,
+.brand-logo-hover {
+  grid-area: 1 / 1;
+  transition: opacity 0.22s ease-in-out, color 0.22s ease-in-out;
+}
+
+.brand-logo-hover {
+  color: var(--accent);
+  opacity: 0;
+}
+
+.logo:hover .brand-logo-current,
+.logo:focus-visible .brand-logo-current,
+.footer-brand:hover .brand-logo-current,
+.footer-brand:focus-visible .brand-logo-current {
+  opacity: 0;
+}
+
+.logo:hover .brand-logo-hover,
+.logo:focus-visible .brand-logo-hover,
+.footer-brand:hover .brand-logo-hover,
+.footer-brand:focus-visible .brand-logo-hover {
+  opacity: 1;
 }
 
 .logo::after {
@@ -1270,7 +1296,7 @@ textarea {
 }
 
 .build-link:hover i {
-  transform: scale(1.1);
+  transform: none;
 }
 
 .build-whatsapp:hover span {
@@ -1598,7 +1624,7 @@ textarea {
 .social-link:hover {
   color: var(--color-white);
   border-color: transparent;
-  transform: translateY(-2px);
+  transform: none;
 }
 
 .social-github:hover {
@@ -1767,8 +1793,14 @@ textarea {
   align-items: start;
 }
 
+.footer-identity {
+  display: grid;
+  gap: 14px;
+  justify-items: start;
+}
+
 .footer-brand {
-  display: inline-flex;
+  display: inline-grid;
   flex-direction: column;
   align-items: flex-start;
   gap: 4px;
@@ -1787,6 +1819,15 @@ textarea {
   transition: color 0.35s ease-in-out;
 }
 
+.footer-brand .brand-logo-current,
+.footer-brand .brand-logo-hover {
+  grid-area: 1 / 1;
+}
+
+.footer-brand .brand-logo-hover {
+  color: var(--color-red);
+}
+
 .footer-brand small {
   color: rgba(255, 255, 255, 0.68);
   font-size: 0.76rem;
@@ -1794,6 +1835,28 @@ textarea {
   letter-spacing: 0.16em;
   text-transform: uppercase;
   transition: color 0.35s ease-in-out;
+}
+
+.footer-location {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  width: fit-content;
+  color: var(--color-white);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  transition: color 0.2s ease;
+}
+
+.footer-location i {
+  color: var(--color-white);
+  font-size: 0.95rem;
+}
+
+.footer-location:hover {
+  color: var(--color-red);
 }
 
 .footer-column {
@@ -1843,14 +1906,14 @@ textarea {
   background: var(--brand-facebook);
   border-color: transparent;
   color: var(--color-white);
-  transform: translateY(-3px);
+  transform: none;
 }
 
 .footer-instagram:hover {
   background: var(--brand-instagram);
   border-color: transparent;
   color: var(--color-white);
-  transform: translateY(-3px);
+  transform: none;
 }
 
 .footer-top-link {
@@ -1871,18 +1934,18 @@ textarea {
 }
 
 .footer-top-link i {
-  transition: transform 0.22s var(--ease);
-  transform: translateY(3px);
+  transition: none;
+  transform: none;
 }
 
 .footer-top-link span {
-  transition: transform 0.22s var(--ease);
-  transform: translateY(3px);
+  transition: none;
+  transform: none;
 }
 
 .footer-top-link:hover i,
 .footer-top-link:hover span {
-  transform: translateY(0);
+  transform: none;
 }
 
 .footer-divider {
@@ -2185,7 +2248,7 @@ textarea {
     gap: 34px 28px;
   }
 
-  .footer-brand {
+  .footer-identity {
     grid-column: 1 / -1;
   }
 
@@ -2499,8 +2562,12 @@ textarea {
     text-align: left;
   }
 
-  .footer-brand {
+  .footer-identity {
     grid-area: brand;
+    justify-self: start;
+  }
+
+  .footer-brand {
     align-items: flex-start;
     justify-self: start;
   }
