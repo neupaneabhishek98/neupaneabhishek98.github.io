@@ -136,8 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const movePortfolio = () => {
-      if (document.hidden) return;
-
       const step = getStep();
       const firstCard = portfolioTrack.querySelector('.project-card');
       if (!step || !firstCard || carouselMoving) return;
@@ -153,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     const startCarousel = () => {
-      if (document.hidden) return;
       if (carouselPaused) return;
       if (!carouselTimer) carouselTimer = window.setInterval(movePortfolio, CAROUSEL_DELAY);
     };
@@ -183,7 +180,6 @@ document.addEventListener('DOMContentLoaded', () => {
     portfolioPrev?.addEventListener('click', () => {
       const step = getStep();
       const lastCard = portfolioTrack.querySelector('.project-card:last-child');
-      if (document.hidden) return;
       if (!step || !lastCard || carouselMoving) return;
 
       carouselMoving = true;
@@ -206,27 +202,14 @@ document.addEventListener('DOMContentLoaded', () => {
       arrow?.addEventListener('pointerleave', resumeCarousel);
       arrow?.addEventListener('mouseenter', pauseCarousel);
       arrow?.addEventListener('mouseleave', resumeCarousel);
-      arrow?.addEventListener('focus', pauseCarousel);
-      arrow?.addEventListener('blur', resumeCarousel);
-    });
-
-    document.addEventListener('visibilitychange', () => {
-      if (document.hidden) {
-        stopCarousel();
-        return;
-      }
-
-      startCarousel();
     });
 
     startCarousel();
-
-    window.addEventListener('blur', stopCarousel);
-    window.addEventListener('focus', startCarousel);
   }
 
   /* ---------- Credential counters ---------- */
   const statNumbers = document.querySelectorAll('.credential-stat strong[data-count]');
+  const STAT_COUNT_DURATION = 1500;
 
   const formatStatNumber = (value) => new Intl.NumberFormat('en-US').format(value);
 
@@ -240,7 +223,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const animateStat = (stat) => {
     const total = Number.parseInt(stat.dataset.count || '0', 10);
-    const duration = Number.parseInt(stat.dataset.duration || '700', 10);
+    const duration = Number.parseInt(stat.dataset.duration || STAT_COUNT_DURATION, 10);
     const suffix = stat.dataset.suffix || '';
     const valueEl = stat.querySelector('.stat-value');
     const plusEl = stat.querySelector('.stat-plus');

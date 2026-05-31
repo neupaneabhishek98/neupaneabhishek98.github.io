@@ -166,6 +166,8 @@ textarea {
   white-space: nowrap;
   cursor: pointer;
   border: 1px solid transparent;
+  box-shadow: none;
+  transform: none;
 }
 
 .btn svg,
@@ -177,33 +179,35 @@ textarea {
 .btn-primary {
   background: var(--primary);
   color: var(--color-white);
+  border-color: var(--primary);
 }
 
-.btn-primary:hover {
-  background: var(--color-matte);
+.btn-primary:hover,
+.btn-primary:focus-visible {
+  background: color-mix(in srgb, var(--primary) 84%, var(--primary-2));
+  border-color: var(--primary);
+  color: var(--color-white);
 }
 
 .btn-quote {
-  position: relative;
-  min-width: 230px;
-  min-height: 52px;
-  padding-right: 58px;
-  overflow: hidden;
+  position: static;
+  min-width: 0;
+  min-height: 0;
+  padding-right: 26px;
+  overflow: visible;
 }
 
 .btn-quote span {
-  position: relative;
-  z-index: 1;
-  transition: transform 0.45s var(--ease);
+  position: static;
+  z-index: auto;
+  transition: none;
 }
 
 .btn-quote i {
-  position: absolute;
-  top: 50%;
-  right: 24px;
-  z-index: 1;
-  transform: translateY(-50%);
-  transition: transform 0.45s var(--ease);
+  position: static;
+  z-index: auto;
+  transform: none;
+  transition: none;
   pointer-events: none;
 }
 
@@ -214,18 +218,20 @@ textarea {
 
 .btn-quote:hover i,
 .btn-quote:focus-visible i {
-  transform: translateY(-50%) rotate(10deg);
+  transform: none;
 }
 
 .btn-secondary {
-  background: transparent;
-  color: var(--text);
-  border-color: var(--border);
+  background: var(--gray-100);
+  color: var(--color-matte);
+  border-color: var(--color-matte);
 }
 
-.btn-secondary:hover {
-  background: var(--surface);
-  border-color: var(--text-muted);
+.btn-secondary:hover,
+.btn-secondary:focus-visible {
+  background: var(--color-white);
+  color: var(--color-matte);
+  border-color: var(--color-matte);
 }
 
 .btn-block {
@@ -1014,11 +1020,10 @@ textarea {
   flex-direction: column;
   justify-content: space-between;
   min-height: 124px;
-  transition: background 0.42s ease-in-out;
 }
 
 .project-card:hover .project-body {
-  background: color-mix(in srgb, var(--bg-elev) 88%, var(--color-matte));
+  background: transparent;
 }
 
 .project-card h3 {
@@ -1177,12 +1182,21 @@ textarea {
   margin-bottom: 9px;
   color: var(--primary);
   font-family: var(--font-head);
-  font-size: clamp(2rem, 4vw, 2.75rem);
+  font-size: clamp(2.3rem, 3.8vw, 3.1rem);
   line-height: 1;
 }
 
+.stat-value,
 .stat-plus {
   display: inline-block;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+  text-transform: none;
+}
+
+.stat-plus {
   opacity: 0;
   transform: translateX(-0.18em);
   transition: opacity 0.24s ease, transform 0.34s var(--ease);
@@ -1193,7 +1207,7 @@ textarea {
   transform: translateX(0);
 }
 
-.credential-stat span {
+.credential-stat > span {
   color: var(--primary);
   font-size: 0.72rem;
   font-weight: 800;
@@ -1783,7 +1797,7 @@ textarea {
 /* ---------- Footer ---------- */
 .footer {
   padding: 64px 0 44px;
-  background: var(--color-navy);
+  background: var(--primary);
   color: var(--color-white);
 }
 
@@ -1859,10 +1873,14 @@ textarea {
 .footer-location i {
   color: var(--color-white);
   font-size: 0.95rem;
+  transform: scale(1);
+  transform-origin: center;
+  transition: color 0.2s ease, transform 0.22s var(--ease);
 }
 
-.footer-location:hover {
-  color: var(--color-red);
+.footer-location:hover i {
+  color: var(--accent);
+  transform: scale(1.05);
 }
 
 .footer-column {
@@ -1977,14 +1995,36 @@ textarea {
 }
 
 .footer-copy a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  padding-left: 1.25em;
   color: inherit;
   font-family: inherit;
   font-weight: 500;
   transition: color 0.2s ease;
 }
 
+.footer-copy a::before {
+  content: "\f061";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+  font-family: "Font Awesome 6 Free";
+  font-size: 0.78em;
+  font-weight: 900;
+  opacity: 0;
+  transform: translateX(-0.85em);
+  transition: opacity 0.22s ease, transform 0.3s var(--ease);
+}
+
 .footer-copy a:hover {
   color: var(--accent);
+}
+
+.footer-copy a:hover::before {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 /* ---------- Scroll Reveal ---------- */
@@ -2070,8 +2110,16 @@ textarea {
   }
 
   .btn-quote {
-    min-width: 270px;
-    min-height: 60px;
+    min-width: 0;
+    min-height: 0;
+  }
+
+  .credential-stat strong {
+    font-size: clamp(2.75rem, 3.4vw, 3.35rem);
+  }
+
+  .credential-stat > span {
+    font-size: 0.8rem;
   }
 
   .showcase-wrapper {
@@ -2144,6 +2192,10 @@ textarea {
   .btn {
     padding: 12px 22px;
     font-size: 0.86rem;
+  }
+
+  .credential-stat strong {
+    font-size: clamp(2.2rem, 3.4vw, 2.8rem);
   }
 
   .showcase-wrapper {
@@ -2426,15 +2478,15 @@ textarea {
   }
 
   .credential-stat strong {
-    font-size: clamp(1.5rem, 7vw, 2rem);
+    font-size: clamp(1.9rem, 8vw, 2.35rem);
   }
 
   .credential-stat:nth-child(4) strong {
-    font-size: clamp(1.18rem, 5.35vw, 1.55rem);
+    font-size: clamp(1.45rem, 6.2vw, 1.9rem);
   }
 
-  .credential-stat span {
-    font-size: 0.54rem;
+  .credential-stat > span {
+    font-size: 0.58rem;
     line-height: 1.45;
     letter-spacing: 0.07em;
     overflow-wrap: anywhere;
@@ -2602,7 +2654,7 @@ textarea {
     justify-self: end;
     min-width: 96px;
     height: 42px;
-    padding: 3px 12px 0;
+    padding: 0 12px 6px;
     font-size: 0.64rem;
   }
 
