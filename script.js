@@ -113,6 +113,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const portfolioNext = document.querySelector('.portfolio-arrow-next');
 
   if (portfolioTrack) {
+    const portfolioCarousel = portfolioTrack.closest('.portfolio-carousel');
+    const portfolioWindow = portfolioTrack.closest('.portfolio-window');
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
     const getStep = () => {
       const firstCard = portfolioTrack.querySelector('.project-card');
       if (!firstCard) return 0;
@@ -122,59 +126,93 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     let carouselMoving = false;
-    let carouselTimer = null;
-    let carouselMotionTimer = null;
+    let carouselTimer = 0;
+    let carouselFallbackTimer = 0;
     let carouselPaused = false;
-    const CAROUSEL_DELAY = 2500;
-    const CAROUSEL_MOTION = 580;
+    const CAROUSEL_DELAY = 3200;
+    const CAROUSEL_MOTION = 620;
 
-    const finishMotion = () => {
+    const resetCarouselPosition = () => {
       portfolioTrack.classList.remove('is-moving');
-      portfolioTrack.style.transform = 'translateX(0)';
-      carouselMoving = false;
-      carouselMotionTimer = null;
+      portfolioTrack.style.transform = 'translate3d(0, 0, 0)';
+      if (portfolioWindow) portfolioWindow.scrollLeft = 0;
     };
 
-    const movePortfolio = () => {
+    const finishMotion = () => {
+      resetCarouselPosition();
+      carouselMoving = false;
+    };
+
+    const clearCarouselTimer = () => {
+      if (carouselTimer) {
+        window.clearTimeout(carouselTimer);
+        carouselTimer = 0;
+      }
+    };
+
+    const clearCarouselFallback = () => {
+      if (carouselFallbackTimer) {
+        window.clearTimeout(carouselFallbackTimer);
+        carouselFallbackTimer = 0;
+      }
+    };
+
+    const scheduleCarousel = () => {
+      clearCarouselTimer();
+      if (carouselPaused || carouselMoving || prefersReducedMotion.matches) return;
+
+      carouselTimer = window.setTimeout(() => {
+        carouselTimer = 0;
+        movePortfolio();
+      }, CAROUSEL_DELAY);
+    };
+
+    const completeAfterTransition = (callback) => {
+      let completed = false;
+
+      const done = () => {
+        if (completed) return;
+        completed = true;
+        portfolioTrack.removeEventListener('transitionend', onTransitionEnd);
+        clearCarouselFallback();
+        callback();
+        if (!carouselPaused) scheduleCarousel();
+      };
+
+      const onTransitionEnd = (event) => {
+        if (event.target === portfolioTrack && event.propertyName === 'transform') done();
+      };
+
+      portfolioTrack.addEventListener('transitionend', onTransitionEnd);
+      carouselFallbackTimer = window.setTimeout(done, CAROUSEL_MOTION + 140);
+    };
+
+    function movePortfolio() {
       const step = getStep();
       const firstCard = portfolioTrack.querySelector('.project-card');
       if (!step || !firstCard || carouselMoving) return;
 
+      clearCarouselTimer();
+      clearCarouselFallback();
       carouselMoving = true;
+      if (portfolioWindow) portfolioWindow.scrollLeft = 0;
       portfolioTrack.classList.add('is-moving');
-      portfolioTrack.style.transform = `translateX(-${step}px)`;
+      portfolioTrack.style.transform = `translate3d(-${step}px, 0, 0)`;
 
-      carouselMotionTimer = window.setTimeout(() => {
+      completeAfterTransition(() => {
         portfolioTrack.appendChild(firstCard);
         finishMotion();
-      }, CAROUSEL_MOTION);
-    };
-
-    const startCarousel = () => {
-      if (carouselPaused) return;
-      if (!carouselTimer) carouselTimer = window.setInterval(movePortfolio, CAROUSEL_DELAY);
-    };
-
-    const stopCarousel = () => {
-      if (carouselTimer) {
-        window.clearInterval(carouselTimer);
-        carouselTimer = null;
-      }
-      if (carouselMotionTimer) {
-        window.clearTimeout(carouselMotionTimer);
-        carouselMotionTimer = null;
-      }
-      finishMotion();
-    };
+      });
+    }
 
     const pauseCarousel = () => {
       carouselPaused = true;
-      stopCarousel();
+      clearCarouselTimer();
     };
 
     const resumeCarousel = () => {
       carouselPaused = false;
-      startCarousel();
+      scheduleCarousel();
     };
 
     portfolioPrev?.addEventListener('click', () => {
@@ -182,29 +220,36 @@ document.addEventListener('DOMContentLoaded', () => {
       const lastCard = portfolioTrack.querySelector('.project-card:last-child');
       if (!step || !lastCard || carouselMoving) return;
 
+      clearCarouselTimer();
+      clearCarouselFallback();
       carouselMoving = true;
+      if (portfolioWindow) portfolioWindow.scrollLeft = 0;
       portfolioTrack.insertBefore(lastCard, portfolioTrack.firstElementChild);
       portfolioTrack.classList.remove('is-moving');
-      portfolioTrack.style.transform = `translateX(-${step}px)`;
+      portfolioTrack.style.transform = `translate3d(-${step}px, 0, 0)`;
       portfolioTrack.offsetWidth;
 
       portfolioTrack.classList.add('is-moving');
-      portfolioTrack.style.transform = 'translateX(0)';
-      carouselMotionTimer = window.setTimeout(() => {
+      portfolioTrack.style.transform = 'translate3d(0, 0, 0)';
+
+      completeAfterTransition(() => {
         finishMotion();
-      }, CAROUSEL_MOTION);
+      });
     });
 
     portfolioNext?.addEventListener('click', movePortfolio);
 
-    [portfolioPrev, portfolioNext].forEach((arrow) => {
-      arrow?.addEventListener('pointerenter', pauseCarousel);
-      arrow?.addEventListener('pointerleave', resumeCarousel);
-      arrow?.addEventListener('mouseenter', pauseCarousel);
-      arrow?.addEventListener('mouseleave', resumeCarousel);
+    [portfolioCarousel, portfolioPrev, portfolioNext].forEach((target) => {
+      target?.addEventListener('pointerenter', pauseCarousel);
+      target?.addEventListener('pointerleave', resumeCarousel);
     });
 
-    startCarousel();
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) clearCarouselTimer();
+      else scheduleCarousel();
+    });
+
+    scheduleCarousel();
   }
 
   /* ---------- Credential counters ---------- */

@@ -895,13 +895,13 @@ textarea {
 }
 
 .portfolio-window {
-  overflow-x: auto;
+  overflow-x: hidden;
   overflow-y: hidden;
   padding: 4px 2px 18px;
   width: 100%;
   scrollbar-width: none;
-  scroll-behavior: smooth;
-  scroll-snap-type: x mandatory;
+  scroll-behavior: auto;
+  scroll-snap-type: none;
 }
 
 .portfolio-grid {
@@ -910,12 +910,13 @@ textarea {
   overflow: visible;
   scrollbar-width: none;
   padding: 0;
-  transform: translateX(0);
+  backface-visibility: hidden;
+  transform: translate3d(0, 0, 0);
   will-change: transform;
 }
 
 .portfolio-grid.is-moving {
-  transition: transform 0.58s var(--ease);
+  transition: transform 0.62s var(--ease);
 }
 
 .portfolio-grid::-webkit-scrollbar {
@@ -1998,23 +1999,23 @@ textarea {
   position: relative;
   display: inline-flex;
   align-items: center;
-  padding-left: 1.25em;
+  gap: 0.42em;
   color: inherit;
   font-family: inherit;
-  font-weight: 500;
+  font-weight: 800;
   transition: color 0.2s ease;
 }
 
-.footer-copy a::before {
+.footer-copy a::after {
   content: "\f061";
-  position: absolute;
-  left: 0;
+  display: inline-block;
+  flex: 0 0 auto;
   color: var(--accent);
   font-family: "Font Awesome 6 Free";
   font-size: 0.78em;
   font-weight: 900;
   opacity: 0;
-  transform: translateX(-0.85em);
+  transform: translateX(-0.35em);
   transition: opacity 0.22s ease, transform 0.3s var(--ease);
 }
 
@@ -2022,7 +2023,7 @@ textarea {
   color: var(--accent);
 }
 
-.footer-copy a:hover::before {
+.footer-copy a:hover::after {
   opacity: 1;
   transform: translateX(0);
 }
