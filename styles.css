@@ -1858,32 +1858,6 @@ textarea {
   transition: color 0.35s ease-in-out;
 }
 
-.footer-location {
-  display: inline-flex;
-  align-items: center;
-  gap: 9px;
-  width: fit-content;
-  color: var(--color-white);
-  font-size: 0.78rem;
-  font-weight: 800;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  transition: color 0.2s ease;
-}
-
-.footer-location i {
-  color: var(--color-white);
-  font-size: 0.95rem;
-  transform: scale(1);
-  transform-origin: center;
-  transition: color 0.2s ease, transform 0.22s var(--ease);
-}
-
-.footer-location:hover i {
-  color: var(--accent);
-  transform: scale(1.05);
-}
-
 .footer-column {
   display: grid;
   gap: 8px;
